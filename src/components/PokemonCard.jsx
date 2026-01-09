@@ -6,8 +6,12 @@ import {
   Typography
 } from "@mui/material";
 import TypeBadge from "./TypeBadge";
+import { useOutletContext } from "react-router-dom";
 
 function PokemonCard({ pokemon }) {
+
+  const { isPixel } = useOutletContext();
+  
   return (
     <Card
       sx={{
@@ -24,7 +28,7 @@ function PokemonCard({ pokemon }) {
         component="img"
         sx={{ p: 0, backgroundColor: "#f5f5f5", objectFit: "contain" }}
         height="200"
-        image={pokemon.image}
+        image={isPixel ? pokemon.pixel : pokemon.image}
         alt={pokemon.name}
       />
       <CardContent
