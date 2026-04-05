@@ -7,10 +7,10 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @ToString
-public class VersionApiDTO {
+public class TypeApiDTO {
 
     private Integer id;
-    private String name;
-    private String region;
     private Integer generation;
+    private String name;
+    private String sprite;
 }
