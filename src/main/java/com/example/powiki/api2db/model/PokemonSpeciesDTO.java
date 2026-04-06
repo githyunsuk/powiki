@@ -13,13 +13,20 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @ToString
-public class TypeEfficacyDTO {
+public class PokemonSpeciesDTO {
 
-    private Integer damageTypeId;
-    private Integer targetTypeId;
-    private double damageFactor;
+    private Integer id;
+    private String name;
+    private Integer sortOrder;
+    private Integer genderRate;
+    private char isBaby;
+    private char isLegendary;
+    private char isMythical;
+    private String category;
+    private Integer generation;
 
     private char isActive;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
 }

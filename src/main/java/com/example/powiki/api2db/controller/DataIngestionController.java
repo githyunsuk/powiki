@@ -73,9 +73,27 @@ public class DataIngestionController {
     }
 
     /**
+     *  특성 데이터 수집
+     */
+    @GetMapping("/ability")
+    public ResponseEntity<ApiResponse<Object>> ingestAbility() {
+        log.info("### 특성 데이터 수집 시작");
+
+        try {
+            dataIngestionService.processAbilityIngestion();
+
+            return ApiResponse.success();
+        } catch (Exception e) {
+            log.error("### 에러", e);
+
+            return ApiResponse.fail(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
      *  포켓몬 데이터 수집
      */
-    @GetMapping("pokemon")
+    @GetMapping("/pokemon")
     public ResponseEntity<ApiResponse<Object>> ingestPokemon() {
         log.info("### 포켓몬 데이터 수집 시작");
 

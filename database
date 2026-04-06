@@ -88,7 +88,7 @@ CREATE TABLE `pokemon_description` (
 drop table pokemon_species;
 CREATE TABLE `pokemon_species` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `pokemon_species_name` varchar(30) DEFAULT NULL,
+  `name` varchar(30) DEFAULT NULL,
   `sort_order` int(11) DEFAULT NULL,
   `gender_rate` int(11) DEFAULT NULL,
   `is_baby` char(1) DEFAULT NULL,

@@ -25,4 +25,23 @@
         VALUES( #{id}, #{name} )
     </insert>
 
+    <insert id="ingestAbility">
+        INSERT INTO ability( id, name, description, generation, is_main_series )
+        VALUES( #{id}, #{name}, #{description}, #{generation}, #{isMainSeries} )
+    </insert>
+
+    <insert id="insertPokemonAbility">
+        INSERT INTO pokemon_ability_map( pokemon_id, ability_id, slot, is_hidden )
+        VALUES( #{pokemonId}, #{abilityId}, #{slot}, #{isHidden} )
+    </insert>
+
+    <insert id="insertPokemonSprite">
+        INSERT INTO pokemon_sprite( pokemon_id, sprite_shiny_url, artwork_shiny_url )
+        VALUES( #{pokemonId}, #{spriteShinyUrl}, #{artworkShinyUrl} )
+    </insert>
+
+    <insert id="insertPokemonType">
+        INSERT INTO pokemon_type_map( pokemon_id, type_id, slot )
+        VALUES( #{pokemonId}, #{typeId}, #{slot} )
+    </insert>
 </mapper>

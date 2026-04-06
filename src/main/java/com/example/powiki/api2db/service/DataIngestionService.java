@@ -9,4 +9,6 @@ public interface DataIngestionService {
     public void processEggGroupIngestion();
 
     public void processPokemonIngestion();
+
+    public void processAbilityIngestion();
 }

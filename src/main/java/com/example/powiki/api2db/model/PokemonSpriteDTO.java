@@ -13,11 +13,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @ToString
-public class TypeEfficacyDTO {
+public class PokemonSpriteDTO {
 
-    private Integer damageTypeId;
-    private Integer targetTypeId;
-    private double damageFactor;
+    private Integer id;
+    private Integer pokemonId;
+    private String spriteShinyUrl;
+    private String artworkShinyUrl;
 
     private char isActive;
     private LocalDateTime createdAt;
