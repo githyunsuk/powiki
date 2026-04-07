@@ -5,28 +5,92 @@
 
 <mapper namespace="com.example.powiki.domain.pokemon.mapper.PokemonMapper">
 
-
-
     <insert id="insertPokemonAbility">
-        INSERT INTO pokemon_ability_map( pokemon_id, ability_id, slot, is_hidden )
-        VALUES( #{pokemonId}, #{abilityId}, #{slot}, #{isHidden} )
+        INSERT INTO pokemon_ability_map
+        (
+             pokemon_id
+            ,ability_id
+            ,slot
+            ,is_hidden
+        )
+        VALUES
+        (
+             #{pokemonId}
+            ,#{abilityId}
+            ,#{slot}
+            ,#{isHidden}
+        )
     </insert>
 
     <insert id="insertPokemonSprite">
-        INSERT INTO pokemon_sprite( pokemon_id, sprite_shiny_url, artwork_shiny_url )
-        VALUES( #{pokemonId}, #{spriteShinyUrl}, #{artworkShinyUrl} )
+        INSERT INTO pokemon_sprite
+        (
+             pokemon_id
+            ,sprite_shiny_url
+            ,artwork_shiny_url
+        )
+        VALUES
+        (
+             #{pokemonId}
+            ,#{spriteShinyUrl}
+            ,#{artworkShinyUrl}
+        )
     </insert>
 
     <insert id="insertPokemonType">
-        INSERT INTO pokemon_type_map( pokemon_id, type_id, slot )
-        VALUES( #{pokemonId}, #{typeId}, #{slot} )
+        INSERT INTO pokemon_type_map
+        (
+             pokemon_id
+            ,type_id
+            ,slot
+        )
+        VALUES
+        (
+             #{pokemonId}
+            ,#{typeId}
+            ,#{slot}
+        )
     </insert>
 
-
-
     <insert id="insertPokemon">
-        INSERT INTO pokemon( id, pokemon_species_id, sort_order, name, main_artwork_url, main_sprite_url, cries, height, weight, hp, attack, defense, special_attack, special_defense, speed, is_default )
-        VALUES( #{id}, #{pokemonSpeciesId}, #{sortOrder}, #{name}, #{mainArtworkUrl}, #{mainSpriteUrl}, #{cries}, #{height}, #{weight}, #{hp}, #{attack}, #{defense}, #{specialAttack}, #{specialDefense}, #{speed}, #{isDefault} )
+        INSERT INTO pokemon
+        (
+             id
+            ,pokemon_species_id
+            ,sort_order
+            ,name
+            ,main_artwork_url
+            ,main_sprite_url
+            ,cries
+            ,height
+            ,weight
+            ,hp
+            ,attack
+            ,defense
+            ,special_attack
+            ,special_defense
+            ,speed
+            ,is_default
+        )
+        VALUES
+        (
+             #{id}
+            ,#{pokemonSpeciesId}
+            ,#{sortOrder}
+            ,#{name}
+            ,#{mainArtworkUrl}
+            ,#{mainSpriteUrl}
+            ,#{cries}
+            ,#{height}
+            ,#{weight}
+            ,#{hp}
+            ,#{attack}
+            ,#{defense}
+            ,#{specialAttack}
+            ,#{specialDefense}
+            ,#{speed}
+            ,#{isDefault}
+        )
     </insert>
 
 </mapper>
