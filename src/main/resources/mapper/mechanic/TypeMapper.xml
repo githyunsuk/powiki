@@ -37,4 +37,16 @@
         )
     </insert>
 
+    <select id="retrieveAllType" resultType="com.example.powiki.domain.mechanic.model.response.TypeSummaryResponse">
+        SELECT
+             id
+            ,name
+            ,sprite
+            ,color
+            ,generation
+        FROM type
+        WHERE is_active = 'Y';
+    </select>
+
+
 </mapper>

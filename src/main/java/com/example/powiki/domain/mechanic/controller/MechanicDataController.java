@@ -1,7 +1,8 @@
 package com.example.powiki.domain.mechanic.controller;
 
-import com.example.powiki.common.response.ApiResponse;
+import com.example.powiki.global.response.ApiResponse;
 import com.example.powiki.domain.mechanic.service.MechanicDataService;
+import com.example.powiki.global.response.ApiStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -26,11 +27,11 @@ public class MechanicDataController {
         try {
             mechanicDataService.processAbilityIngestion();
 
-            return ApiResponse.success();
+            return ApiResponse.success(ApiStatus.OK);
         } catch (Exception e) {
             log.error("### 에러", e);
 
-            return ApiResponse.fail(HttpStatus.INTERNAL_SERVER_ERROR);
+            return ApiResponse.fail(ApiStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -44,11 +45,11 @@ public class MechanicDataController {
         try {
             mechanicDataService.processTypeIngestion();
 
-            return ApiResponse.success();
+            return ApiResponse.success(ApiStatus.OK);
         } catch (Exception e) {
             log.error("### 에러", e);
 
-            return ApiResponse.fail(HttpStatus.INTERNAL_SERVER_ERROR);
+            return ApiResponse.fail(ApiStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

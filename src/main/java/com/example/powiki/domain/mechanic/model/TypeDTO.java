@@ -20,7 +20,7 @@ public class TypeDTO {
     private String name;
     private String sprite;
 
-    private char isActive;
+    private String isActive;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
