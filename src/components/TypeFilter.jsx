@@ -1,10 +1,25 @@
 import { useOutletContext } from "react-router-dom";
-import { pokemonTypes } from "../constants/pokemon";
 import { Box, Checkbox, FormControlLabel, Paper, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import api from "../api/axiosInstance";
 
 function TypeFilter() {
 
-   const { selectedTypes, handleType } = useOutletContext();
+  const { selectedTypes, handleType } = useOutletContext();
+  const [pokemonTypes, setPokemonTypes] = useState([]);
+
+  useEffect(() => {
+    const fetchTypes = async () => {
+      try {
+        const response = await api.get("/api/types");
+        setPokemonTypes(response.data.data);
+      } catch (error) {
+        console.error("타입 데이터 불러오기 실패:", error);
+      }
+    };
+
+    fetchTypes();
+  }, []);
   
   return (
     <Paper
@@ -35,22 +50,31 @@ function TypeFilter() {
           gap: 1.5,
         }}
       >
-        {Object.entries(pokemonTypes).map(([key, value]) => {
-          const isSelected = selectedTypes.includes(key);
-          const typeName = value.label;
-          const typeColor = value.color;
-
+        {pokemonTypes.map((type) => {
+          const isSelected = selectedTypes.includes(type.id);
           return (
             <FormControlLabel
-              key={key}
+              key={type.id}
               control={
                 <Checkbox
                   checked={isSelected}
-                  onChange={() => handleType(key)}
+                  onChange={() => handleType(type.id)}
                   sx={{ display: "none" }}
                 />
               }
-              label={typeName}
+              label={
+                <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+                  {type.sprite && (
+                    <Box
+                      component="img"
+                      src={type.sprite}
+                      alt={type.name}
+                      sx={{ width: 20, height: 20, objectFit: "contain"}}
+                    />
+                  )}
+                  {type.name}
+                </Box>
+              }
               sx={{
                 margin: 0,
                 height: "40px",
@@ -59,9 +83,9 @@ function TypeFilter() {
                 justifyContent: "center",
                 cursor: "pointer",
                 transition: "all 0.2s ease",
-                border: `2px solid ${typeColor}`,
-                backgroundColor: isSelected ? typeColor : "transparent",
-                color: isSelected ? "#fff" : typeColor,
+                border: `2px solid ${type.color}`,
+                backgroundColor: isSelected ? type.color : "transparent",
+                color: isSelected ? "#fff" : type.color,
                 fontWeight: "bold",
                 fontSize: "0.85rem",
                 "&:hover": {

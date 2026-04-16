@@ -4,7 +4,7 @@ import { useOutletContext } from "react-router-dom";
 function GenFilter() {
 
   const { currentGen, handleGen } = useOutletContext();
-  const GENERATIONS = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
+  const GENERATIONS = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   return (
     <Paper
@@ -33,7 +33,7 @@ function GenFilter() {
       <RadioGroup
         row
         value={currentGen}
-        onChange={(e) => handleGen(e.target.value)}
+        onChange={(e) => handleGen(Number(e.target.value))}
         sx={{
           display: "grid",
           gridTemplateColumns: {

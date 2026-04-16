@@ -11,7 +11,7 @@ function PokemonLayout() {
   const [isPixel, setIsPixel] = useState(false);
   const [keyword, setKeyword] = useState("");
   const [selectedTypes, setSelectedTypes] = useState([]);
-  const [currentGen, setCurrentGen] = useState("1");
+  const [currentGen, setCurrentGen] = useState(1);
 
   //포켓몬 데이터 가져오기
   useEffect(() => {

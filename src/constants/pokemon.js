@@ -4,7 +4,7 @@ export const pokemonTypes = {
   fire: { label: "불꽃", color: "#E56C3E" },
   water: { label: "물", color: "#5185C5" },
   bug: { label: "벌레", color: "#9FA244" },
-  normal: { label: "노멀", color: "#949495" },
+  normal: { label: "노말", color: "#949495" },
   flying: { label: "비행", color: "#A2C3E7" },
   electric: { label: "전기", color: "#FBB917" },
   ground: { label: "땅", color: "#9C7743" },
