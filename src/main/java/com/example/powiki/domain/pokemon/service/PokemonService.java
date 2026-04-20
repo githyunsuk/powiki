@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface PokemonService {
 
-    public List<PokemonListResponse> retrievePokemonList();
+    public List<PokemonListResponse> retrievePokemonList(String formType);
 }

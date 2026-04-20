@@ -96,6 +96,7 @@
     <!-- Pokemon 리스트 -->
     <resultMap id="pokemonListResponse" type="com.example.powiki.domain.pokemon.model.response.PokemonListResponse">
         <id property="id" column="id" />
+        <result property="pokemonSpeciesId" column="pokemon_species_id"/>
         <result property="mainArtworkUrl" column="main_artwork_url"/>
         <result property="mainSpriteUrl" column="main_sprite_url" />
         <result property="name" column="name" />
@@ -109,11 +110,10 @@
         </collection>
     </resultMap>
 
-    <select id="selectPokemonList" resultMap="pokemonListResponse">
+    <select id="selectPokemonList" resultMap="pokemonListResponse" parameterType="String">
         SELECT
              p.id
-            ,p.main_artwork_url
-            ,p.main_sprite_url
+            ,p.pokemon_species_id
             ,p.name
             ,ps.generation
             ,t.id as type_id
@@ -131,7 +131,9 @@
         WHERE
             p.is_active = 'Y'
         AND
-            p.is_default = 'Y'
+            p.form_type = #{formType}
+        ORDER BY
+            p.pokemon_species_id
     </select>
 
 </mapper>

@@ -9,8 +9,7 @@ import java.util.List;
 public class PokemonListResponse {
 
     private Integer id;
-    private String mainArtworkUrl;
-    private String mainSpriteUrl;
+    private Integer pokemonSpeciesId;
     private String name;
     private Integer generation;
     private List<pokemonType> types;

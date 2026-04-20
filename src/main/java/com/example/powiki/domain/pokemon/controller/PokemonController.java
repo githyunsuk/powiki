@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -21,11 +22,11 @@ public class PokemonController {
     /**
      * 모든 포켓몬 리스트 조회
      */
-    @GetMapping("/api/pokemons")
-    public ResponseEntity<ApiResponse<List<PokemonListResponse>>> retrievePokemonList() {
+    @GetMapping("/api/pokemons/{formType}")
+    public ResponseEntity<ApiResponse<List<PokemonListResponse>>> retrievePokemonList(@PathVariable("formType") String formType) {
 
         log.info("### 포켓몬 리스트 조회 시작");
-        List<PokemonListResponse> result = pokemonService.retrievePokemonList();
+        List<PokemonListResponse> result = pokemonService.retrievePokemonList(formType);
 
         return ApiResponse.success(result);
     }

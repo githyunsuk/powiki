@@ -16,8 +16,8 @@ public class PokemonServiceImpl implements PokemonService {
     private final PokemonMapper pokemonMapper;
 
     @Override
-    public List<PokemonListResponse> retrievePokemonList() {
+    public List<PokemonListResponse> retrievePokemonList(String formType) {
 
-        return pokemonMapper.selectPokemonList();
+        return pokemonMapper.selectPokemonList(formType);
     }
 }

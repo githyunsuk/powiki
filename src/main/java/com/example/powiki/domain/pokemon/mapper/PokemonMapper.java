@@ -20,5 +20,5 @@ public interface PokemonMapper {
 
     void insertPokemon(Pokemon pokemon);
 
-    List<PokemonListResponse> selectPokemonList();
+    List<PokemonListResponse> selectPokemonList(String formType);
 }
