@@ -13,7 +13,7 @@ import TypeFilter from "../components/TypeFilter";
 function PokemonWiki() {
   const { selectedTypes, handleFormType } = useOutletContext();
   const [tabValue, setTabValue] = useState(0);
-  const formTypeList = ["default", "mega", "gmax"];
+  const formTypeList = ["default", "mega", "gmax", "legendary", "mythical"];
 
   const clickTab = (event, newValue) => {
     handleFormType(formTypeList[newValue]);
@@ -42,6 +42,8 @@ function PokemonWiki() {
           <Tab label="일반 도감" sx={tabStyle} />
           <Tab label="메가진화" sx={tabStyle} />
           <Tab label="거다이맥스" sx={tabStyle} />
+          <Tab label="전설" sx={tabStyle} />
+          <Tab label="환상" sx={tabStyle} />
         </Tabs>
 
         {/* 2. 도감 */}
