@@ -1,14 +1,14 @@
 import { useOutletContext } from "react-router-dom";
 import { Box, Checkbox, FormControlLabel, Paper, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import api from "../api/axiosInstance";
+import api from "../../api/axiosInstance";
 
 function TypeFilter() {
 
   const { selectedTypes, handleType } = useOutletContext();
   const [pokemonTypes, setPokemonTypes] = useState([]);
 
-  useEffect(() => {
+   useEffect(() => {
     const fetchTypes = async () => {
       try {
         const response = await api.get("/api/types");
@@ -17,7 +17,6 @@ function TypeFilter() {
         console.error("타입 데이터 불러오기 실패:", error);
       }
     };
-
     fetchTypes();
   }, []);
   

@@ -6,9 +6,9 @@ import {
 } from "@mui/material";
 import { useOutletContext } from "react-router-dom";
 import { useState } from "react";
-import PokemonList from "../components/PokemonList";
-import GenFilter from "../components/GenFilter";
-import TypeFilter from "../components/TypeFilter";
+import PokemonList from "../components/PokemonWiki/PokemonList";
+import GenFilter from "../components/features/GenFilter";
+import TypeFilter from "../components/features/TypeFilter"; 
 
 function PokemonWiki() {
   const { selectedTypes, handleFormType } = useOutletContext();

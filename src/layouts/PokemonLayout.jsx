@@ -1,8 +1,8 @@
 import { Box, CircularProgress, Typography, Container } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
-import Header from "../components/Header";
-import Loading from "../components/Loading";
+import Header from "../components/common/Header";
+import Loading from "../components/common/Loading";
 import api from "../api/axiosInstance";
 
 function PokemonLayout() {

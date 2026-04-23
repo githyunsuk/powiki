@@ -5,24 +5,23 @@ import {
   CardMedia,
   Typography
 } from "@mui/material";
-import TypeBadge from "./TypeBadge";
-import { useOutletContext } from "react-router-dom";
-import { getPokemonCries, getPokemonImageUrl } from "../utils/pokemonHelper";
+import TypeBadge from "../common/TypeBadge";
+import { useNavigate, useOutletContext } from "react-router-dom";
+import { getPokemonImageUrl } from "../../utils/pokemonHelper";
 
 function PokemonCard({ pokemon }) {
 
   const { imageType } = useOutletContext();
   const imageUrl = getPokemonImageUrl(pokemon.id, imageType);
+  const navigate = useNavigate();
 
-  const playCry = (id) => {
-    const audio = getPokemonCries(id);
-    audio.volume = 0.5; 
-    audio.play();
+  const handleClick = () => {
+    navigate(`/detail/${pokemon.id}`);
   };
   
   return (
     <Card
-      onClick={() => playCry(pokemon.id)}
+      onClick={handleClick}
       sx={{
         height: "100%",
         display: "flex",
