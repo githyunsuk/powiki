@@ -1,9 +1,12 @@
 package com.example.powiki.domain.pokemon.mapper;
 
-import com.example.powiki.domain.pokemon.model.PokemonAbilityMap;
-import com.example.powiki.domain.pokemon.model.Pokemon;
-import com.example.powiki.domain.pokemon.model.PokemonSprite;
-import com.example.powiki.domain.pokemon.model.PokemonTypeMap;
+import com.example.powiki.domain.pokemon.model.PokemonAbilityInfoDTO;
+import com.example.powiki.domain.pokemon.model.PokemonBasicInfoDTO;
+import com.example.powiki.domain.pokemon.model.PokemonTypeInfoDTO;
+import com.example.powiki.domain.pokemon.model.entity.PokemonAbilityMap;
+import com.example.powiki.domain.pokemon.model.entity.Pokemon;
+import com.example.powiki.domain.pokemon.model.entity.PokemonSprite;
+import com.example.powiki.domain.pokemon.model.entity.PokemonTypeMap;
 import com.example.powiki.domain.pokemon.model.response.PokemonListResponse;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -21,4 +24,10 @@ public interface PokemonMapper {
     void insertPokemon(Pokemon pokemon);
 
     List<PokemonListResponse> selectPokemonList(String formType);
+
+    PokemonBasicInfoDTO selectPokemonBasicInfo(Long id);
+
+    List<PokemonTypeInfoDTO> selectPokemonTypeInfo(Long id);
+
+    List<PokemonAbilityInfoDTO> selectPokemonAbilityInfo(Long id);
 }

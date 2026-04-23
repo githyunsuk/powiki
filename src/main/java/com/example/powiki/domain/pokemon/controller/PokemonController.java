@@ -1,5 +1,6 @@
 package com.example.powiki.domain.pokemon.controller;
 
+import com.example.powiki.domain.pokemon.model.response.PokemonDetailResponse;
 import com.example.powiki.domain.pokemon.model.response.PokemonListResponse;
 import com.example.powiki.domain.pokemon.service.PokemonService;
 import com.example.powiki.global.response.ApiResponse;
@@ -27,6 +28,18 @@ public class PokemonController {
 
         log.info("### 포켓몬 리스트 조회 시작");
         List<PokemonListResponse> result = pokemonService.retrievePokemonList(formType);
+
+        return ApiResponse.success(result);
+    }
+
+    /**
+     *  특정 포켓몬 상세 정보 조회
+     */
+    @GetMapping("/api/pokemon/{pokemonId}")
+    public ResponseEntity<ApiResponse<PokemonDetailResponse>> retrievePokemonDetail(@PathVariable("pokemonId") Long pokemonId) {
+
+        log.info("### 포켓몬 상세 정보 조회 시작");
+        PokemonDetailResponse result = pokemonService.retrievePokemonDetail(pokemonId);
 
         return ApiResponse.success(result);
     }

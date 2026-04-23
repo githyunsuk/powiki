@@ -1,4 +1,4 @@
-package com.example.powiki.domain.pokemon.model;
+package com.example.powiki.domain.pokemon.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

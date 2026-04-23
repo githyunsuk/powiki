@@ -27,4 +27,31 @@
         ON DUPLICATE KEY UPDATE id = id
     </insert>
 
+    <!-- 포켓몬 알 그룹 정보 -->
+    <select id="selectPokemonEggGroupNames" resultType="String" parameterType="Long">
+        SELECT
+            eg.name
+        FROM
+            pokemon_species_egg_group_map psegm
+        JOIN
+            egg_group eg ON psegm.egg_group_id = eg.id
+        WHERE
+            psegm.pokemon_species_id = #{pokemonSpeciesId}
+        GROUP BY
+            eg.name
+    </select>
+
+    <!-- 포켓몬 도감 정보 -->
+    <select id="selectPokemonDescriptionInfo" resultType="String" parameterType="Long">
+        SELECT
+            pd.description
+        FROM
+            pokemon_description pd
+        WHERE
+            pd.pokemon_species_id = #{pokemonSpeciesId}
+        ORDER BY
+            pd.version_id ASC
+        LIMIT 1;
+    </select>
+
 </mapper>

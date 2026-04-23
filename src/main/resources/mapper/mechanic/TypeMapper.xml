@@ -48,5 +48,27 @@
         WHERE is_active = 'Y';
     </select>
 
+    <!-- 해당 타입의 방어상성 -->
+    <select id="selectTypeDefenseEfficacy" resultType="TypeDefenseEfficacyDTO">
+        SELECT
+            t.id,
+            t.name,
+            t.color,
+            IFNULL(te.damage_factor, 1.0) AS factor
+        FROM
+            type t
+        LEFT JOIN
+            type_efficacy te ON t.id = te.damage_type_id
+        AND
+            te.target_type_id IN
+        <foreach collection="typeIds" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        WHERE
+            t.is_active = 'Y'
+        ORDER BY
+            t.id
+    </select>
+
 
 </mapper>

@@ -3,9 +3,9 @@ package com.example.powiki.domain.mechanic.service;
 
 import com.example.powiki.domain.mechanic.mapper.AbilityMapper;
 import com.example.powiki.domain.mechanic.mapper.TypeMapper;
-import com.example.powiki.domain.mechanic.model.Ability;
-import com.example.powiki.domain.mechanic.model.Type;
-import com.example.powiki.domain.mechanic.model.TypeEfficacy;
+import com.example.powiki.domain.mechanic.model.entity.Ability;
+import com.example.powiki.domain.mechanic.model.entity.Type;
+import com.example.powiki.domain.mechanic.model.entity.TypeEfficacy;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -128,17 +128,14 @@ public class MechanicDataServiceImpl implements MechanicDataService {
             // 타입 저장
             Type typeApi = Type.builder().generation(generation).id(id).name(name).sprite(sprite).build();
             log.debug("### typeApi: {}", typeApi);
-            typeMapper.insertType(typeApi);
+//            typeMapper.insertType(typeApi);
 
             // 타입 상성 저장
             JsonNode damageRelations = response.get("damage_relations");
 
             processTypeEfficacy(id, damageRelations.get("double_damage_from"), 2.0, true);
-            processTypeEfficacy(id, damageRelations.get("double_damage_to"), 2.0, false);
             processTypeEfficacy(id, damageRelations.get("half_damage_from"), 0.5, true);
-            processTypeEfficacy(id, damageRelations.get("half_damage_to"), 0.5, false);
             processTypeEfficacy(id, damageRelations.get("no_damage_from"), 0, true);
-            processTypeEfficacy(id, damageRelations.get("no_damage_to"), 0, false);
 
         }
     }
