@@ -6,6 +6,7 @@ import com.example.powiki.domain.pokemon.mapper.PokemonMapper;
 import com.example.powiki.domain.pokemon.mapper.SpeciesMapper;
 import com.example.powiki.domain.pokemon.model.PokemonAbilityInfoDTO;
 import com.example.powiki.domain.pokemon.model.PokemonBasicInfoDTO;
+import com.example.powiki.domain.pokemon.model.PokemonNavInfoDTO;
 import com.example.powiki.domain.pokemon.model.PokemonTypeInfoDTO;
 import com.example.powiki.domain.pokemon.model.response.PokemonDetailResponse;
 import com.example.powiki.domain.pokemon.model.response.PokemonListResponse;
@@ -86,13 +87,17 @@ public class PokemonServiceImpl implements PokemonService {
         List<String> eggGroups = speciesMapper.selectPokemonEggGroupNames(speciesId);
         String description = speciesMapper.selectPokemonDescriptionInfo(pokemonId);
 
+        // 이전, 다음 포켓몬 정보
+        PokemonNavInfoDTO prev = pokemonMapper.selectPrevPokemon(speciesId);
+        PokemonNavInfoDTO next = pokemonMapper.selectNextPokemon(speciesId);
+
         // 응답 객체 조립
         PokemonDetailResponse result = PokemonDetailResponse.builder().
                 id(basic.getId()).pokemonSpeciesId(speciesId).name(basic.getName())
                         .height(basic.getHeight()).weight(basic.getWeight()).category(basic.getCategory())
                         .description(description).eggGroups(eggGroups).types(types).abilities(abilities)
                         .typeEfficacy(groupedEfficacy).stats(new PokemonDetailResponse.Stats(basic))
-                .gender(new PokemonDetailResponse.Gender(basic.getGenderRate())).build();
+                .gender(new PokemonDetailResponse.Gender(basic.getGenderRate())).next(next).prev(prev).build();
 
         return result;
     }

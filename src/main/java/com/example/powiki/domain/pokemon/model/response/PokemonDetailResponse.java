@@ -3,6 +3,7 @@ package com.example.powiki.domain.pokemon.model.response;
 import com.example.powiki.domain.mechanic.model.TypeDefenseEfficacyDTO;
 import com.example.powiki.domain.pokemon.model.PokemonAbilityInfoDTO;
 import com.example.powiki.domain.pokemon.model.PokemonBasicInfoDTO;
+import com.example.powiki.domain.pokemon.model.PokemonNavInfoDTO;
 import com.example.powiki.domain.pokemon.model.PokemonTypeInfoDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,6 +30,9 @@ public class PokemonDetailResponse {
     private Integer weight;
     private String category;
     private String description;
+
+    private PokemonNavInfoDTO prev;
+    private PokemonNavInfoDTO next;
 
     private List<String> eggGroups;
     private List<PokemonTypeInfoDTO> types;

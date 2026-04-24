@@ -2,6 +2,7 @@ package com.example.powiki.domain.pokemon.mapper;
 
 import com.example.powiki.domain.pokemon.model.PokemonAbilityInfoDTO;
 import com.example.powiki.domain.pokemon.model.PokemonBasicInfoDTO;
+import com.example.powiki.domain.pokemon.model.PokemonNavInfoDTO;
 import com.example.powiki.domain.pokemon.model.PokemonTypeInfoDTO;
 import com.example.powiki.domain.pokemon.model.entity.PokemonAbilityMap;
 import com.example.powiki.domain.pokemon.model.entity.Pokemon;
@@ -30,4 +31,8 @@ public interface PokemonMapper {
     List<PokemonTypeInfoDTO> selectPokemonTypeInfo(Long id);
 
     List<PokemonAbilityInfoDTO> selectPokemonAbilityInfo(Long id);
+
+    PokemonNavInfoDTO selectPrevPokemon(Long currentId);
+
+    PokemonNavInfoDTO selectNextPokemon(Long currentId);
 }

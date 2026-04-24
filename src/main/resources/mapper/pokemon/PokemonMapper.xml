@@ -203,4 +203,36 @@
             pam.slot;
     </select>
 
+    <!-- 이전 포켓몬 정보 -->
+    <select id="selectPrevPokemon" resultType="PokemonNavInfoDTO">
+        SELECT
+            id, name
+        FROM
+            pokemon_species
+        WHERE
+            id = (
+                    SELECT COALESCE
+                    (
+                        (SELECT MAX(id) FROM pokemon_species WHERE id &lt; #{currentId}),
+                        (SELECT MAX(id) FROM pokemon_species)
+                    )
+                 )
+    </select>
+
+    <!-- 이후 포켓몬 정보 -->
+    <select id="selectNextPokemon" resultType="PokemonNavInfoDTO">
+        SELECT
+            id, name
+        FROM
+            pokemon_species
+        WHERE
+            id = (
+                    SELECT COALESCE
+                    (
+                        (SELECT MIN(id) FROM pokemon_species WHERE id &gt; #{currentId}),
+                        (SELECT MIN(id) FROM pokemon_species)
+                    )
+                 )
+    </select>
+
 </mapper>
