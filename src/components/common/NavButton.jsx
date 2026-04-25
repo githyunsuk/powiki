@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 function NavButton({ pokemon, color, direction }) {
   
   const navigate = useNavigate();
+  const isLeft = direction === 'left';
 
    const handleClick = () => {
     navigate(`/detail/${pokemon.id}`);
@@ -15,18 +16,20 @@ function NavButton({ pokemon, color, direction }) {
 
   return (
     <Box
-      sx={{
-        position: "fixed",
-        top: "50%",
-        transform: "translateY(-50%)",
-        zIndex: 1100,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center", 
-        width: { xs: 100, md: 150 }, 
-        [direction]: { xs: 0, md: 10 }, 
-      }}
-    >
+  sx={{
+    position: "fixed",
+    top: "50%",
+    left: "50%",
+    transform: isLeft 
+      ? "translate(calc(-450px - 100px - 100%), -50%)" // [컨테이너절반] - [여백] - [내 몸통너비만큼 추가]
+      : "translate(calc(450px + 100px), -50%)",        // [컨테이너절반] + [여백]
+    zIndex: 1100,
+    display: { xs: "none", lg: "flex" }, 
+    flexDirection: "column",
+    alignItems: "center",
+    width: 150, // 내 몸통 너비
+  }}
+>
       <Typography
         variant="caption"
         sx={{

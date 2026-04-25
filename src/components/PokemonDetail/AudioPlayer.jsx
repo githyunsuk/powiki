@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { POKEMON_ASSETS } from "../../constants/pokemon";
 import { Box, Stack, Typography } from "@mui/material";
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
@@ -8,6 +8,19 @@ function AudioPlayer({ pokemonId, accentColor }) {
   const audioRef = useRef(null);
   const [progress, setProgress] = useState(0);
   const crySource = `${POKEMON_ASSETS.CRY}${parseInt(pokemonId)}.ogg`
+
+  // 언마운트 및 페이지 이동시 오디오 초기화
+  useEffect(() => {
+    const currentAudio = audioRef.current;
+
+    return () => {
+      if (currentAudio) {
+        currentAudio.pause(); 
+        currentAudio.currentTime = 0; 
+      }
+      setProgress(0); 
+    };
+  }, [pokemonId]);
 
   const handlePlayCry = () => {
     if (audioRef.current) {
