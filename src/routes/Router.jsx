@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import App from "../App.jsx";
 import PokemonWiki from "../pages/PokemonWiki.jsx";
 import PokemonLayout from "../layouts/PokemonLayout.jsx";
@@ -14,10 +14,14 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <PokemonWiki />,
+            element: <Navigate to="/pokedex" repleace />
           },
           {
-            path: "detail/:pokemonId",
+            path: "pokedex",
+            element: <PokemonWiki />
+          },
+          {
+            path: "pokedex/:pokemonId",
             element: <PokemonDetail />,
           }
         ],

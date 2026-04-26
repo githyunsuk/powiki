@@ -9,27 +9,27 @@ function NavButton({ pokemon, color, direction }) {
   const isLeft = direction === 'left';
 
    const handleClick = () => {
-    navigate(`/detail/${pokemon.id}`);
+    navigate(`/pokedex/${pokemon.id}`);
   };
   
   if (!pokemon) return null;
 
   return (
     <Box
-  sx={{
-    position: "fixed",
-    top: "50%",
-    left: "50%",
-    transform: isLeft 
-      ? "translate(calc(-450px - 100px - 100%), -50%)" // [컨테이너절반] - [여백] - [내 몸통너비만큼 추가]
-      : "translate(calc(450px + 100px), -50%)",        // [컨테이너절반] + [여백]
-    zIndex: 1100,
-    display: { xs: "none", lg: "flex" }, 
-    flexDirection: "column",
-    alignItems: "center",
-    width: 150, // 내 몸통 너비
-  }}
->
+      sx={{
+        position: "fixed",
+        top: "50%",
+        left: "50%",
+        transform: isLeft 
+          ? "translate(calc(-450px - 100px - 100%), -50%)" 
+          : "translate(calc(450px + 100px), -50%)",        
+        zIndex: 1100,
+        display: { xs: "none", lg: "flex" }, 
+        flexDirection: "column",
+        alignItems: "center",
+        width: 150, 
+      }}
+    >
       <Typography
         variant="caption"
         sx={{

@@ -1,27 +1,47 @@
-import { Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import PokemonCard from "./PokemonCard";
-import { useOutletContext } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { usePokemonStore } from "../../store/pokemonStore";
 
-function PokemonList() {
-  const { pokemonData, keyword, selectedTypes, currentGen } = useOutletContext();
+function PokemonList({ pokemonData }) {
+  
+  const keyword = usePokemonStore((state) => state.keyword);
+  const selectedTypes = usePokemonStore((state) => state.selectedTypes);
+  const currentGen = usePokemonStore((state) => state.currentGen);
+  const formType = usePokemonStore((state) => state.formType);
 
   const [itemLimit, setItemLimit] = useState(20);
   const observerTarget = useRef(null);
 
-  const filteredData = pokemonData.filter((pokemon) => {
-    const matchesGen = currentGen === 0 || pokemon.generation === currentGen;
-    const matchesKeyword = pokemon.name.includes(keyword);
-    const matchesType =
-      selectedTypes.length === 0 ||
-      pokemon.types.some((types) => selectedTypes.includes(types.typeId));
+  const filteredData = useMemo(() => {
+    if (!pokemonData) return [];
 
-    return matchesGen && matchesKeyword && matchesType;
-  });
+    return pokemonData.filter((pokemon) => {
+      // 세대 필터
+      const matchesGen = currentGen === 0 || pokemon.generation === currentGen;
+      // 키워드 필터
+      const matchesKeyword = pokemon.name.includes(keyword);
+      // 타입 필터
+      const matchesType =
+        selectedTypes.length === 0 ||
+        pokemon.types.some((t) => selectedTypes.includes(t.typeId));
+      // 폼(탭) 필터
+      let matchesForm = null;
+      if (formType === "default" || formType === "mega") {
+        matchesForm = pokemon.formType === formType;
+      } else if (formType === "legendary") {
+        matchesForm = pokemon.legendary && pokemon.formType === "default";
+      } else if (formType === "mythical") {
+        matchesForm = pokemon.mythical && pokemon.formType === "default";;
+      }
+
+      return matchesGen && matchesKeyword && matchesType && matchesForm;
+    });
+  }, [pokemonData, keyword, selectedTypes, currentGen, formType]);
 
   useEffect(() => {
-    setItemLimit(20);
-  }, [keyword, selectedTypes, currentGen]);
+    setItemLimit((prev) => (prev !== 20 ? 20 : prev));
+  }, [filteredData]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -42,12 +62,21 @@ function PokemonList() {
 
   if (filteredData.length === 0) {
     return (
-      <Typography
-        variant="h6"
-        sx={{ textAlign: "center", mt: 10, color: "text.secondary" }}
+      <Box 
+        sx={{ 
+          textAlign: "center", 
+          mt: 10, 
+          color: "text.secondary",
+          minHeight: "50vh", 
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
       >
-        조건에 맞는 포켓몬이 없습니다. 🔍
-      </Typography>
+        <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+          조건에 맞는 포켓몬이 없습니다. 🔍
+        </Typography>
+      </Box>
     );
   }
 

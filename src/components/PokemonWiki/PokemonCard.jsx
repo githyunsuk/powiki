@@ -1,30 +1,25 @@
-import {
-  Box,
-  Card,
-  CardContent,
-  CardMedia,
-  Typography
-} from "@mui/material";
+import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
 import TypeBadge from "../common/TypeBadge";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getPokemonImageUrl } from "../../utils/pokemonHelper";
+import { usePokemonStore } from "../../store/pokemonStore";
 
 function PokemonCard({ pokemon }) {
 
-  const { imageType } = useOutletContext();
+  const imageType = usePokemonStore((state) => state.imageType);
   const imageUrl = getPokemonImageUrl(pokemon.id, imageType);
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/detail/${pokemon.id}`);
+    navigate(`/pokedex/${pokemon.id}`);
   };
   
   return (
     <Card
       onClick={handleClick}
       sx={{
-        width: "100%",      // 가로 고정
-    height: "380px",
+        width: "100%",      
+        height: "380px",
         display: "flex",
         flexDirection: "column",
         borderRadius: 3,
@@ -58,7 +53,7 @@ function PokemonCard({ pokemon }) {
             justifyContent: "center"
           }}
         >
-          {pokemon.name}
+          {pokemon.name} 
         </Typography>
         <Box sx={{ display: "flex", justifyContent: "center", gap: 0.5 }}>
           {pokemon.types.map((type) => (

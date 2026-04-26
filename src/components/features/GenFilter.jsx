@@ -1,10 +1,12 @@
-import { FormControlLabel, Paper, Radio, RadioGroup, Typography } from "@mui/material";
-import { useOutletContext } from "react-router-dom";
+import { Box, Paper, Typography } from "@mui/material";
+import { GENERATIONS } from "../../constants/pokemon";
+import { usePokemonStore } from "../../store/pokemonStore";
 
 function GenFilter() {
-
-  const { currentGen, handleGen } = useOutletContext();
-  const GENERATIONS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  
+  const currentGen = usePokemonStore((state) => state.currentGen);
+  const handleGen = usePokemonStore((state) => state.handleGen);
+  const generations = GENERATIONS;
 
   return (
     <Paper
@@ -30,10 +32,7 @@ function GenFilter() {
         📅 세대 선택
       </Typography>
 
-      <RadioGroup
-        row
-        value={currentGen}
-        onChange={(e) => handleGen(Number(e.target.value))}
+      <Box
         sx={{
           display: "grid",
           gridTemplateColumns: {
@@ -44,19 +43,17 @@ function GenFilter() {
           gap: 1,
         }}
       >
-        {GENERATIONS.map((gen) => {
+        {generations.map((gen) => {
           const isSelected = currentGen === gen;
           return (
-            <FormControlLabel
+            <Box
               key={gen}
-              value={gen}
-              control={<Radio sx={{ display: "none" }} />} 
-              label={gen === 0 ? "전체" : `${gen}세대`}
+              onClick={() => handleGen(gen)}
               sx={{
-                margin: 0,
                 height: "36px",
                 borderRadius: "10px",
                 display: "flex",
+                alignItems: "center",
                 justifyContent: "center",
                 cursor: "pointer",
                 transition: "all 0.2s",
@@ -65,14 +62,18 @@ function GenFilter() {
                 color: isSelected ? "#fff" : "#888",
                 fontWeight: "bold",
                 fontSize: "0.8rem",
+                userSelect: "none", 
                 "&:hover": {
                   borderColor: "#333",
                 },
+                px: 1,
               }}
-            />
+            >
+              {gen === 0 ? "전체" : `${gen}세대`}
+            </Box>
           );
         })}
-      </RadioGroup>
+      </Box>
     </Paper>
   );
 }

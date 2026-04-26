@@ -1,7 +1,14 @@
 import { Box, FormControlLabel, Switch, Typography } from "@mui/material";
 import SearchBar from "./SearchBar";
+import { usePokemonStore } from "../../store/pokemonStore";
 
-function Header({ isPixel, togglePixel, keyword, handleKeyword }) {
+function Header() {
+
+  const isPixel = usePokemonStore((state) => state.isPixel);
+  const togglePixel = usePokemonStore((state) => state.togglePixel);
+  const keyword = usePokemonStore((state) => state.keyword);
+  const handleKeyword = usePokemonStore((state) => state.handleKeyword);
+  
   return (
     <>
       <Typography

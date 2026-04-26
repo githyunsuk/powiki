@@ -1,14 +1,15 @@
-import { useOutletContext } from "react-router-dom";
-import { Box, Checkbox, FormControlLabel, Paper, Typography } from "@mui/material";
+import { Box, Paper, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import api from "../../api/axiosInstance";
+import { usePokemonStore } from "../../store/pokemonStore";
 
 function TypeFilter() {
 
-  const { selectedTypes, handleType } = useOutletContext();
+  const selectedTypes = usePokemonStore((state) => state.selectedTypes);
+  const handleType = usePokemonStore((state) => state.handleType);
   const [pokemonTypes, setPokemonTypes] = useState([]);
 
-   useEffect(() => {
+  useEffect(() => {
     const fetchTypes = async () => {
       try {
         const response = await api.get("/api/types");
@@ -19,7 +20,7 @@ function TypeFilter() {
     };
     fetchTypes();
   }, []);
-  
+
   return (
     <Paper
       elevation={0}
@@ -33,9 +34,15 @@ function TypeFilter() {
     >
       <Typography
         variant="subtitle1"
-        sx={{ mb: 2, fontWeight: 900, color: "#222", px: 1 }}
+        sx={{ 
+          mb: 2, 
+          fontWeight: 900, 
+          color: "#222", 
+          px: 1,
+          fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif', // 폰트 통일
+        }}
       >
-        🏷️ 타입 필터
+        🏷️ 타입 선택
       </Typography>
 
       <Box
@@ -52,49 +59,55 @@ function TypeFilter() {
         {pokemonTypes.map((type) => {
           const isSelected = selectedTypes.includes(type.id);
           return (
-            <FormControlLabel
+            <Box
               key={type.id}
-              control={
-                <Checkbox
-                  checked={isSelected}
-                  onChange={() => handleType(type.id)}
-                  sx={{ display: "none" }}
-                />
-              }
-              label={
-                <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
-                  {type.sprite && (
-                    <Box
-                      component="img"
-                      src={type.sprite}
-                      alt={type.name}
-                      sx={{ width: 20, height: 20, objectFit: "contain"}}
-                    />
-                  )}
-                  {type.name}
-                </Box>
-              }
+              onClick={() => handleType(type.id)}
               sx={{
-                margin: 0,
                 height: "40px",
                 borderRadius: "12px",
                 display: "flex",
+                alignItems: "center",
                 justifyContent: "center",
+                gap: 0.8,
                 cursor: "pointer",
                 transition: "all 0.2s ease",
                 border: `2px solid ${type.color}`,
                 backgroundColor: isSelected ? type.color : "transparent",
                 color: isSelected ? "#fff" : type.color,
-                fontWeight: "bold",
-                fontSize: "0.85rem",
+                userSelect: "none",
                 "&:hover": {
                   transform: "translateY(-2px)",
+                  backgroundColor: isSelected ? type.color : `${type.color}10`, // 살짝 불투명한 배경색
                 },
                 "&:active": {
                   transform: "scale(0.95)",
                 },
               }}
-            />
+            >
+              {type.sprite && (
+                <Box
+                  component="img"
+                  src={type.sprite}
+                  alt={type.name}
+                  sx={{ 
+                    width: 18, 
+                    height: 18, 
+                    objectFit: "contain",
+                    // 선택됐을 때 아이콘이 더 잘 보이도록 필터 조절 가능
+                    filter: isSelected ? "brightness(1.2)" : "none"
+                  }}
+                />
+              )}
+              <Typography
+                sx={{
+                  fontSize: "0.85rem",
+                  fontWeight: "bold",
+                  fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif', // 폰트 통일
+                }}
+              >
+                {type.name}
+              </Typography>
+            </Box>
           );
         })}
       </Box>

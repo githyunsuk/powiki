@@ -4,21 +4,34 @@ import {
   Tab,
   Tabs,
 } from "@mui/material";
-import { useOutletContext } from "react-router-dom";
-import { useState } from "react";
 import PokemonList from "../components/PokemonWiki/PokemonList";
 import GenFilter from "../components/features/GenFilter";
 import TypeFilter from "../components/features/TypeFilter"; 
+import { usePokemonStore } from "../store/pokemonStore";
+import { useEffect } from "react";
+import Loading from "../components/common/Loading";
 
 function PokemonWiki() {
-  const { selectedTypes, handleFormType } = useOutletContext();
-  const [tabValue, setTabValue] = useState(0);
+
+  const pokemonData = usePokemonStore((state) => state.pokemonData);
+  const fetchOnes = usePokemonStore((state) => state.fetchOnes);
+  const selectedTypes = usePokemonStore((state) => state.selectedTypes);
+  const formType = usePokemonStore((state) => state.formType);
+  const handleFormType = usePokemonStore((state) => state.handleFormType);
   const formTypeList = ["default", "mega", "legendary", "mythical"];
 
+  const tabValue = formTypeList.indexOf(formType);
   const clickTab = (event, newValue) => {
     handleFormType(formTypeList[newValue]);
-    setTabValue(newValue);
   };
+
+  useEffect(() => {
+    fetchOnes();
+  }, [fetchOnes])
+
+  if(!pokemonData || pokemonData.length == 0) {
+    return <Loading />
+  }
 
   return (
       <Box sx={{ maxWidth: "1250px", margin: "0 auto", px: 2 }}>
@@ -58,7 +71,7 @@ function PokemonWiki() {
           <Box sx={{ p: { xs: 2, md: 3 }, pb: 0 }}>
             <GenFilter />
             <TypeFilter />
-            <PokemonList selectedTypes={selectedTypes} currentDex={tabValue} />
+            <PokemonList pokemonData={pokemonData} selectedTypes={selectedTypes} currentDex={tabValue} />
           </Box>
         </Paper>
       </Box>
