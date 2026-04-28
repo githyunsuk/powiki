@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.powiki.domain.mechanic.mapper.TypeMapper">
+
+    <insert id="insertType">
+        INSERT INTO type
+        (
+             id
+            ,name
+            ,generation
+            ,sprite
+        )
+        VALUES
+        (
+             #{id}
+            ,#{name}
+            ,#{generation}
+            ,#{sprite}
+        )
+    </insert>
+
+    <insert id="insertTypeEfficacy">
+        INSERT INTO type_efficacy
+        (
+             damage_type_id
+            ,target_type_id
+            ,damage_factor
+        )
+        VALUES
+        (
+             #{damageTypeId}
+            ,#{targetTypeId}
+            ,#{damageFactor}
+        )
+    </insert>
+
+    <select id="retrieveAllType" resultType="com.example.powiki.domain.mechanic.model.response.TypeSummaryResponse">
+        SELECT
+             id
+            ,name
+            ,sprite
+            ,color
+            ,generation
+        FROM type
+        WHERE is_active = 'Y';
+    </select>
+
+    <!-- 해당 타입의 방어상성 -->
+    <select id="selectTypeDefenseEfficacy" resultType="TypeDefenseEfficacyDTO">
+        SELECT
+            t.id,
+            t.name,
+            t.color,
+            IFNULL(te.damage_factor, 1.0) AS factor
+        FROM
+            type t
+        LEFT JOIN
+            type_efficacy te ON t.id = te.damage_type_id
+        AND
+            te.target_type_id IN
+        <foreach collection="typeIds" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        WHERE
+            t.is_active = 'Y'
+        ORDER BY
+            t.id
+    </select>
+
+
+</mapper>
