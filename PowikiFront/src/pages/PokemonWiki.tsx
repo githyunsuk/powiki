@@ -6,15 +6,18 @@ import { usePokemonStore } from "../store/pokemonStore";
 import { useEffect } from "react";
 import Loading from "../components/common/Loading";
 import { useShallow } from "zustand/shallow";
+import SearchBar from "../components/common/SearchBar";
 
 function PokemonWiki() {
 
-  const { pokemonListData, fetchOnes, formType, handleFormType } = usePokemonStore(
+  const { pokemonListData, fetchOnes, formType, handleFormType, keyword, handleKeyword } = usePokemonStore(
     useShallow((state) => ({
       pokemonListData: state.pokemonListData,
       fetchOnes: state.fetchOnes,
       formType: state.formType,
-      handleFormType: state.handleFormType
+      handleFormType: state.handleFormType,
+      keyword: state.keyword,
+      handleKeyword: state.handleKeyword
     }))
   );
   const formTypeList = ["default", "mega", "legendary", "mythical"];
@@ -29,6 +32,19 @@ function PokemonWiki() {
   }
 
   return (
+    <>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          width: "100%",
+          mb: 4,
+          position: "relative",
+        }}
+      >
+        <SearchBar keyword={keyword} handleKeyword={handleKeyword}/>
+      </Box>
       <Box sx={{ maxWidth: "1250px", margin: "0 auto", px: 2 }}>
         
         {/* 1. 상단 탭 */}
@@ -70,6 +86,7 @@ function PokemonWiki() {
           </Box>
         </Paper>
       </Box>
+    </>
   );
 }
 

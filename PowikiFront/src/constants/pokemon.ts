@@ -16,9 +16,9 @@ export const TAB_NAME_MAP: Record<string, string> = {
 
 export const FORM_TYPE_NAME_MAP: Record<string, string> = {
   mega: '메가진화',
-  megax: '메가진화 X',
-  megay: '메가진화 Y',
-  megaz: '메가진화 Z',
+  megax: '메가진화X',
+  megay: '메가진화Y',
+  megaz: '메가진화Z',
   gmax: '거다이맥스',
   primal: '원시회귀',
 };

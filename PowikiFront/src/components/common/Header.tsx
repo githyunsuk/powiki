@@ -5,14 +5,14 @@ import { useShallow } from "zustand/shallow";
 
 function Header() {
 
-  const{ isPixel, togglePixel, keyword, handleKeyword } = usePokemonStore(
-    useShallow((state) => ({
-      isPixel: state.isPixel,
-      togglePixel: state.togglePixel,
-      keyword: state.keyword,
-      handleKeyword: state.handleKeyword
-    }))
-  );
+  // const{ isPixel, togglePixel, keyword, handleKeyword } = usePokemonStore(
+  //   useShallow((state) => ({
+  //     isPixel: state.isPixel,
+  //     togglePixel: state.togglePixel,
+  //     keyword: state.keyword,
+  //     handleKeyword: state.handleKeyword
+  //   }))
+  // );
 
   return (
     <>
@@ -43,7 +43,7 @@ function Header() {
           sx={{ width: 48, height: 48 }}
         />
       </Typography>
-      <Box
+      {/* <Box
         sx={{
           display: "flex",
           alignItems: "center",
@@ -90,7 +90,7 @@ function Header() {
             display: "flex",
           }}
         />
-      </Box>
+      </Box> */}
     </>
   );
 }
