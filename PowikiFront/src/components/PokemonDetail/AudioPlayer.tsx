@@ -63,6 +63,7 @@ function AudioPlayer({ pokemonId, accentColor }: AudioPlayerProps) {
             bgcolor: accentColor, color: "#fff", borderRadius: "50%", 
             width: 32, height: 32, display: "flex", alignItems: "center", justifyContent: "center",
             cursor: "pointer", transition: "transform 0.1s",
+            position: "relative", zIndex: 10, flexShrink: 0,
             "&:active": { transform: "scale(0.9)" },
             "&:hover": { opacity: 0.8 }
           }}

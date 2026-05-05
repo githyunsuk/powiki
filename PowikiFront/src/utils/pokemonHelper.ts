@@ -1,6 +1,7 @@
 import { POKEMON_ASSETS } from "../constants/pokemon";
 
 type ImageType = keyof typeof POKEMON_ASSETS;
+
 export const getPokemonImageUrl = (id:number, imageType:ImageType) => {
   const baseUrl = POKEMON_ASSETS[imageType];
 

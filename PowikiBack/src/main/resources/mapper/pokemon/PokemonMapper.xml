@@ -97,11 +97,10 @@
     <resultMap id="pokemonListResponse" type="com.example.powiki.domain.pokemon.model.response.PokemonListResponse">
         <id property="id" column="id" />
         <result property="pokemonSpeciesId" column="pokemon_species_id"/>
-        <result property="mainArtworkUrl" column="main_artwork_url"/>
-        <result property="mainSpriteUrl" column="main_sprite_url" />
         <result property="name" column="name" />
         <result property="generation" column="generation" />
         <result property="formType" column="form_type"  />
+        <result property="formName" column="form_name" />
         <result property="isLegendary" column="is_legendary" />
         <result property="isMythical" column="is_mythical" />
 
@@ -124,6 +123,7 @@
             ,t.name as type_name
             ,t.color as type_color
             ,p.form_type
+            ,p.form_name
             ,CASE WHEN ps.is_legendary = 'Y' THEN 1 ELSE 0 END AS is_legendary
             ,CASE WHEN ps.is_mythical = 'Y' THEN 1 ELSE 0 END AS is_mythical
         FROM

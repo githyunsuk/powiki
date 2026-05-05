@@ -13,6 +13,7 @@ public class PokemonListResponse {
     private String name;
     private Integer generation;
     private String formType;
+    private String formName;
     private boolean isLegendary;
     private boolean isMythical;
     private List<pokemonType> types;

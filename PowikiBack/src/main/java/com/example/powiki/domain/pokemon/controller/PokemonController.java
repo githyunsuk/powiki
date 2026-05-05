@@ -1,7 +1,6 @@
 package com.example.powiki.domain.pokemon.controller;
 
 import com.example.powiki.domain.pokemon.model.response.PokemonDetailListResponse;
-import com.example.powiki.domain.pokemon.model.response.PokemonDetailResponse;
 import com.example.powiki.domain.pokemon.model.response.PokemonListResponse;
 import com.example.powiki.domain.pokemon.service.PokemonService;
 import com.example.powiki.global.response.ApiResponse;
@@ -27,7 +26,7 @@ public class PokemonController {
     @GetMapping("/api/pokemons")
     public ResponseEntity<ApiResponse<List<PokemonListResponse>>> retrievePokemonList() {
 
-        log.info("### 포켓몬 리스트 조회 시작");
+        log.info("### 포켓몬 리스트 조회 시작sssss");
         List<PokemonListResponse> result = pokemonService.retrievePokemonList();
 
         return ApiResponse.success(result);

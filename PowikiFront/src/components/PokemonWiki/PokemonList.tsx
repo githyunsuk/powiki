@@ -31,10 +31,12 @@ export default function PokemonList() {
       // 타입 필터
       const matchesType =
         selectedTypes.length === 0 ||
-        pokemon.types.some((t) => selectedTypes.includes(t.id));
+        selectedTypes.every((selectedId) => 
+          pokemon.types.some((t) => t.id === selectedId)
+       );
       // 폼(탭) 필터
       let matchesForm = null;
-      if (formType === "default" || formType === "mega") {
+      if (formType === "default") {
         matchesForm = pokemon.formType === formType;
       } else if (formType === "legendary") {
         matchesForm = pokemon.legendary && pokemon.formType === "default";

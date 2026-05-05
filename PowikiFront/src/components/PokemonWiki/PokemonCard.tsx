@@ -12,7 +12,7 @@ function PokemonCard({ pokemon }: { pokemon: PokemonListData}) {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/pokedex/${pokemon.id}`);
+    navigate(`/pokedex/${pokemon.pokemonSpeciesId}`);
   };
   
   return (
@@ -20,7 +20,7 @@ function PokemonCard({ pokemon }: { pokemon: PokemonListData}) {
       onClick={handleClick}
       sx={{
         width: "100%",      
-        height: "380px",
+        height: "340px",
         display: "flex",
         flexDirection: "column",
         borderRadius: 3,
@@ -54,7 +54,7 @@ function PokemonCard({ pokemon }: { pokemon: PokemonListData}) {
             justifyContent: "center"
           }}
         >
-          {pokemon.name} 
+          {pokemon.formType==="mega" ? pokemon.formName : pokemon.name} 
         </Typography>
         <Box sx={{ display: "flex", justifyContent: "center", gap: 0.5 }}>
           {pokemon.types.map((type) => (

@@ -4,6 +4,9 @@ export const POKEMON_ASSETS = {
   CRY: "https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/",
   PIXEL_SHINY: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny",
   ARTWORK_SHINY: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/",
+  SV: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-ix/scarlet-violet/",
+  BDSP: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-viii/brilliant-diamond-shining-pearl/",
+  USUM: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-vii/ultra-sun-ultra-moon/",
 };
 
 export const GENERATIONS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];

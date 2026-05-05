@@ -40,7 +40,7 @@ function TypeFilter() {
           fontWeight: 900, 
           color: "#222", 
           px: 1,
-          fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif', // 폰트 통일
+          fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif', 
         }}
       >
         🏷️ 타입 선택
@@ -78,7 +78,7 @@ function TypeFilter() {
                 userSelect: "none",
                 "&:hover": {
                   transform: "translateY(-2px)",
-                  backgroundColor: isSelected ? type.color : `${type.color}10`, // 살짝 불투명한 배경색
+                  backgroundColor: isSelected ? type.color : `${type.color}10`,
                 },
                 "&:active": {
                   transform: "scale(0.95)",
@@ -94,7 +94,6 @@ function TypeFilter() {
                     width: 18, 
                     height: 18, 
                     objectFit: "contain",
-                    // 선택됐을 때 아이콘이 더 잘 보이도록 필터 조절 가능
                     filter: isSelected ? "brightness(1.2)" : "none"
                   }}
                 />
@@ -103,7 +102,7 @@ function TypeFilter() {
                 sx={{
                   fontSize: "0.85rem",
                   fontWeight: "bold",
-                  fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif', // 폰트 통일
+                  fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif', 
                 }}
               >
                 {type.name}

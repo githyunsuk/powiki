@@ -3,14 +3,13 @@ import PokemonList from "../components/PokemonWiki/PokemonList";
 import GenFilter from "../components/features/GenFilter";
 import TypeFilter from "../components/features/TypeFilter"; 
 import { usePokemonStore } from "../store/pokemonStore";
-import { useEffect } from "react";
 import Loading from "../components/common/Loading";
 import { useShallow } from "zustand/shallow";
-import SearchBar from "../components/common/SearchBar";
+import GlobalSearchBar from "../components/common/GlobalSearchBar";
 
 function PokemonWiki() {
 
-  const { pokemonListData, fetchOnes, formType, handleFormType, keyword, handleKeyword } = usePokemonStore(
+  const { pokemonListData, formType, handleFormType, keyword, handleKeyword } = usePokemonStore(
     useShallow((state) => ({
       pokemonListData: state.pokemonListData,
       fetchOnes: state.fetchOnes,
@@ -20,12 +19,8 @@ function PokemonWiki() {
       handleKeyword: state.handleKeyword
     }))
   );
-  const formTypeList = ["default", "mega", "legendary", "mythical"];
+  const formTypeList = ["default", "legendary", "mythical"];
   const tabValue = formTypeList.indexOf(formType);
-
-  useEffect(() => {
-    fetchOnes();
-  }, [fetchOnes])
 
   if(!pokemonListData || pokemonListData.length == 0) {
     return <Loading />
@@ -43,7 +38,7 @@ function PokemonWiki() {
           position: "relative",
         }}
       >
-        <SearchBar keyword={keyword} handleKeyword={handleKeyword}/>
+        <GlobalSearchBar keyword={keyword} handleKeyword={handleKeyword}/>
       </Box>
       <Box sx={{ maxWidth: "1250px", margin: "0 auto", px: 2 }}>
         
@@ -63,8 +58,7 @@ function PokemonWiki() {
             }
           }}
         >
-          <Tab label="일반 도감" sx={tabStyle} />
-          <Tab label="메가진화" sx={tabStyle} />
+          <Tab label="일반" sx={tabStyle} />
           <Tab label="전설" sx={tabStyle} />
           <Tab label="환상" sx={tabStyle} />
         </Tabs>

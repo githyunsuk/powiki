@@ -15,19 +15,10 @@ import NavButton from "../components/common/NavButton";
 import { PokemonDetailListData, PokemonFormData } from "../types/Pokemon";
 import { FORM_TYPE_NAME_MAP, TAB_NAME_MAP } from "../constants/pokemon";
 import FormBookmark from "../components/PokemonDetail/FormBookmark";
-import SearchBar from "../components/common/SearchBar";
-import { usePokemonStore } from "../store/pokemonStore";
-import { useShallow } from "zustand/shallow";
+import DetailSearchBar from "../components/PokemonDetail/DetailSearchBar";
 
 export default function PokemonDetail() {
 
-  const{ keyword, handleKeyword } = usePokemonStore(
-      useShallow((state) => ({
-        keyword: state.keyword,
-        handleKeyword: state.handleKeyword
-      }))
-    );
-  
   const navigate = useNavigate();
   const { pokemonId } = useParams();
   const [pokemon, setPokemon] = useState<PokemonDetailListData>();
@@ -80,7 +71,7 @@ export default function PokemonDetail() {
     if (!pokemon?.forms) return [];
     
     return pokemon.forms
-      .filter(f => f.formGroup === activeGroup)
+      .filter(f => f.formGroup === activeGroup && f.formType !== "cosmetic")
       .map(f => ({ id: f.id, label: formatFormName(f) }));
   }, [pokemon, activeGroup]); 
 
@@ -108,7 +99,7 @@ export default function PokemonDetail() {
   return (
     <>
       <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%", mb: 4, position: "relative",}}>
-        <SearchBar keyword={keyword} handleKeyword={handleKeyword}/>
+        <DetailSearchBar />
       </Box>
 
       <Container maxWidth="md" sx={{ pb: 5, mt: 4 }}>
@@ -174,9 +165,14 @@ export default function PokemonDetail() {
                 <Typography variant="h6" sx={{ opacity: 0.8, fontWeight: "700" }}>
                   No.{String(pokemon.speciesId).padStart(4, "0")}
                 </Typography>
-                <Typography variant="h3" fontWeight="800">
-                  {displayName}
-                </Typography>
+                <Box sx={{ display: "flex", alignItems: "baseline", gap: 1.5 }}>
+      <Typography variant="h3" fontWeight="800">
+        {displayName}
+      </Typography>
+      <Typography variant="h5" fontWeight="700" sx={{ opacity: 0.9 }}>
+        (알로라의 모습)
+      </Typography>
+    </Box>
               </Box>
             </Paper>
 
@@ -233,7 +229,7 @@ export default function PokemonDetail() {
                 {Object.entries(pokemonForm.typeEfficacy)
                   .sort(([a], [b]) => parseFloat(b) - parseFloat(a))
                   .map(([multiplier, types], idx, array) => (
-                    <InfoRow key={multiplier} label={`${multiplier}배`} color={ACCENT_COLOR} isLast={idx === array.length - 1}>
+                    <InfoRow key={multiplier} label={`${Number(multiplier)}배`} color={ACCENT_COLOR} isLast={idx === array.length - 1}>
                       <Stack direction="row" sx={{ gap: 1.0 }} flexWrap="wrap">
                         {(types as any[]).map(type => (
                           <TypeBadge key={type.id} name={type.name} color={type.color} />

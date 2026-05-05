@@ -32,6 +32,7 @@ export interface TypeEfficacy {
   id: number;
   pokemonSpeciesId: number;
   name: string;
+  formName: string;
   generation: number;
   formType?: string;
   types: PokemonType[];
