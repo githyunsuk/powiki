@@ -39,6 +39,9 @@ public class PokemonServiceImpl implements PokemonService {
         return pokemonMapper.selectPokemonList();
     }
 
+    /**
+     *  특정 포켓몬 상세 정보 조회
+     */
     @Override
     public PokemonDetailListResponse retrievePokemonDetail(Long speciesId) {
 
@@ -107,70 +110,4 @@ public class PokemonServiceImpl implements PokemonService {
 
         return result;
     }
-
-
-    /**
-     *  특정 포켓몬 상세 정보 조회
-     */
-//    @Override
-//    public PokemonDetailResponse retrievePokemonDetail(Long pokemonId) {
-//
-//        // 기본 정보
-//        PokemonBasicInfoDTO basic = pokemonMapper.selectPokemonBasicInfo(pokemonId);
-//
-//        // 특성 정보
-//        List<PokemonAbilityInfoDTO> abilities = pokemonMapper.selectPokemonAbilityInfo(pokemonId);
-//
-//        // 타입 및 타입 상성 정보
-//        List<PokemonTypeInfoDTO> types = pokemonMapper.selectPokemonTypeInfo(pokemonId);
-//
-//        List<Long> typeIds = new ArrayList<>();
-//        for (PokemonTypeInfoDTO type : types) {
-//            typeIds.add(type.getId());
-//        }
-//
-//        // 타입 상성 가공
-//        List<TypeDefenseEfficacyDTO> typeEfficacy = typeMapper.selectTypeDefenseEfficacy(typeIds);
-//        Map<String, TypeDefenseEfficacyDTO> combinedMap = new HashMap<>();
-//        for(TypeDefenseEfficacyDTO current : typeEfficacy) {
-//            String typeName = current.getName();
-//
-//            if(combinedMap.containsKey(typeName)) {
-//                TypeDefenseEfficacyDTO existing = combinedMap.get(typeName);
-//                existing.setFactor(existing.getFactor() * current.getFactor());
-//            } else {
-//                combinedMap.put(typeName, current);
-//            }
-//        }
-//        List<TypeDefenseEfficacyDTO> finalEfficacy = new ArrayList<>(combinedMap.values());
-//        Map<Double, List<TypeDefenseEfficacyDTO>> groupedEfficacy = new HashMap<>();
-//
-//        for (TypeDefenseEfficacyDTO dto : finalEfficacy) {
-//            Double factor = dto.getFactor();
-//
-//            if (!groupedEfficacy.containsKey(factor)) {
-//                groupedEfficacy.put(factor, new ArrayList<>());
-//            }
-//            groupedEfficacy.get(factor).add(dto);
-//        }
-//
-//        // 알 그룹 및 도감 정보
-//        Long speciesId = basic.getPokemonSpeciesId();
-//        List<String> eggGroups = speciesMapper.selectPokemonEggGroupNames(speciesId);
-//        String description = speciesMapper.selectPokemonDescriptionInfo(pokemonId);
-//
-//        // 이전, 다음 포켓몬 정보
-//        PokemonNavInfoDTO prev = pokemonMapper.selectPrevPokemon(speciesId);
-//        PokemonNavInfoDTO next = pokemonMapper.selectNextPokemon(speciesId);
-//
-//        // 응답 객체 조립
-//        PokemonDetailResponse result = PokemonDetailResponse.builder().
-//                id(basic.getId()).pokemonSpeciesId(speciesId).name(basic.getName())
-//                        .height(basic.getHeight()).weight(basic.getWeight()).category(basic.getCategory())
-//                        .description(description).eggGroups(eggGroups).types(types).abilities(abilities)
-//                        .typeEfficacy(groupedEfficacy).stats(new PokemonDetailResponse.Stats(basic))
-//                .gender(new PokemonDetailResponse.Gender(basic.getGenderRate())).next(next).prev(prev).build();
-//
-//        return result;
-//    }
 }

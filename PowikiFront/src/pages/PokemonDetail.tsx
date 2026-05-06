@@ -77,12 +77,24 @@ export default function PokemonDetail() {
 
   const pokemonForm = pokemon?.forms.find(f => f.id === activeFormId) || pokemon?.forms[0]; 
 
-  const displayName = (() => {
-    if (!pokemonForm) return "";
-    if (formatFormName(pokemonForm) === "기본 모습") return pokemonForm.name;
-    if (pokemonForm.formType && FORM_TYPE_NAME_MAP[pokemonForm.formType]) return pokemonForm.formName;
-    return `${pokemonForm.name}(${pokemonForm.formName})`;
-  })();
+  const nameInfo = useMemo(() => {
+  if (!pokemonForm) return { main: "", sub: "" };
+
+  const formName = formatFormName(pokemonForm);
+
+  // 기본 모습이면 이름만 출력
+  if (formName === "기본 모습") {
+    return { main: pokemonForm.name, sub: "" };
+  }
+
+  // 특수면 폼 이름 출력(메가리자몽x, 거다이맥스 리자몽)
+  if (pokemonForm.formType && FORM_TYPE_NAME_MAP[pokemonForm.formType]) {
+    return { main: pokemonForm.formName, sub: "" };
+  }
+
+  // 그 외는 이름과 폼이름 분리
+  return { main: pokemonForm.name, sub: pokemonForm.formName };
+}, [pokemonForm]);
 
   const selectLeftSideBar = (groupId: string) => {
     setActiveGroup(groupId);
@@ -166,13 +178,15 @@ export default function PokemonDetail() {
                   No.{String(pokemon.speciesId).padStart(4, "0")}
                 </Typography>
                 <Box sx={{ display: "flex", alignItems: "baseline", gap: 1.5 }}>
-      <Typography variant="h3" fontWeight="800">
-        {displayName}
-      </Typography>
-      <Typography variant="h5" fontWeight="700" sx={{ opacity: 0.9 }}>
-        (알로라의 모습)
-      </Typography>
-    </Box>
+                  <Typography variant="h3" fontWeight="800">
+                    {nameInfo.main}
+                  </Typography>
+                  {nameInfo.sub && (
+                  <Typography variant="h5" fontWeight="700" sx={{ opacity: 0.9 }}>
+                    ({nameInfo.sub})
+                  </Typography>
+                  )}
+                </Box>
               </Box>
             </Paper>
 
