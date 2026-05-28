@@ -116,4 +116,42 @@
         )
     </insert>
 
+    <resultMap id="MoveListResponse" type="com.example.powiki.domain.mechanic.model.response.MoveListResponse">
+
+    </resultMap>
+
+    <select id="selectMoveList" resultMap="MoveListResponse">
+        SELECT
+             m.id ,m.name ,m.power ,m.accuracy ,m.pp ,m.description
+            ,t.id AS type_id, t.name AS type_name ,t.color AS type_color
+            ,ma.id AS ailment_id ,ma.name AS ailment_name, ma.description AS ailment_description
+            ,mca.id AS category_id ,mca.name AS category_name ,mca.description AS category_description
+            ,mc.id AS class_id ,mc.name AS class_name ,mc.description AS class_description
+            ,mt.id AS target_id ,mt.name AS target_name ,mt.description AS target_description
+        FROM
+            move m
+        JOIN
+            type t ON m.type_id = t.id
+        JOIN
+            move_ailment ma ON m.ailment_id = ma.id
+        JOIN
+            move_category mca ON m.category_id = mca.id
+        JOIN
+            move_class mc ON m.class_id = mc.id
+        JOIN
+            move_target mt ON m.target_id = mt.id
+        WHERE
+            m.is_active = 'Y'
+          AND
+            t.is_active = 'Y'
+          AND
+            ma.is_active = 'Y'
+          AND
+            mca.is_active = 'Y'
+          AND
+            mc.is_active = 'Y'
+          AND
+            mt.is_active = 'Y'
+    </select>
+
 </mapper>

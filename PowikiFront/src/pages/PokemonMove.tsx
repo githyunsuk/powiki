@@ -3,81 +3,77 @@ import TypeFilter from "../components/features/TypeFilter";
 import MoveSearchBar from "../components/PokemonMove/MoveSearchBar";
 import TypeBadge from "../components/common/TypeBadge";
 
-const COLUMN_WIDTHS = {
-  name: "15%",
-  type: "10%",
-  category: "8%",
-  power: "7%",
-  accuracy: "7%",
-  pp: "7%",
-  description: "31%",
-  etc: "15%",
-};
-
 interface MoveData {
   id: number;
   name: string;
-  type: string;
-  color: string;
-  category: string;
-  power: number | null;
-  accuracy: number | null;
+  type: {
+    id: number;
+    name: string;
+    color: string;
+  };
+  category: {
+    id: number;
+    name: string;
+    description: string;
+  };
+  ailment: {
+    id: number;
+    name: string;
+    description: string;
+  };
+  class:{
+    id: number;
+    name: string;
+    description: string;
+  };
+  target: {
+    id: number;
+    name: string;
+    description: string;
+  };
+  power: number;
+  accuracy: number;
   pp: number;
   description: string;
-  ailment?: string;
-  isContact?: boolean;
 }
 
 const dummyMoves: MoveData[] = [
   {
     id: 1,
     name: "10만볼트",
-    type: "전기",
-    color: "#F7D02C",
-    category: "special",
+    type: {
+      id: 1,
+      name: "전기",
+      color: "#F7D02C"
+    },
+    category: {
+      id: 1,
+      name: "공격",
+      description: "상대에게 피해를 입힙니다."
+    },
+    ailment: {
+      id: 1,
+      name: "마비",
+      description: "전투 도중 12.5%의 확률로 행동이 불가능하게 되며, 스피드가 50% 감소된다."
+    },
+    class:{
+      id: 1,
+      name: "물리",
+      description: "",
+    },
+    target: {
+      id: 1,
+      name: "단일 대상",
+      description: "필드 위의 포켓몬 중 1마리를 대상으로 선택합니다.",
+    },
     power: 90,
     accuracy: 100,
     pp: 15,
     description: "10만 볼트의 강한 전격을 상대에게 퍼부어 공격한다. 10% 확률로 상대를 마비 상태로 만든다.",
-    ailment: "마비",
-    isContact: false,
   },
-  {
-    id: 2,
-    name: "칼춤",
-    type: "노말",
-    color: "#A8A77A",
-    category: "status",
-    power: null,
-    accuracy: null,
-    pp: 20,
-    description: "전투 댄스를 추어 격렬하게 기세를 높인다. 자신의 공격을 2랭크 올린다.",
-    isContact: false,
-  },
-  {
-    id: 3,
-    name: "인파이트",
-    type: "격투",
-    color: "#C22E28",
-    category: "physical",
-    power: 120,
-    accuracy: 100,
-    pp: 5,
-    description: "방어를 버리고 상대에게 파고들어 전력으로 공격한다. 자신의 방어와 특수방어가 1랭크씩 떨어진다.",
-    ailment: "방어/특방 하락",
-    isContact: true,
-  }
 ];
 
 export default function PokemonMove() {
-  const getCategoryLabel = (category: string) => {
-    switch (category) {
-      case "physical": return "물리";
-      case "special": return "특수";
-      case "status": return "변화";
-      default: return "미정";
-    }
-  };
 
   return (
     <>
@@ -112,15 +108,12 @@ export default function PokemonMove() {
             overflow: "hidden"
           }}
         >
-          {/* 내부 패딩을 일정하게 유지하여 상단 필터와 하단 목록의 선을 맞춤 */}
           <Box sx={{ p: { xs: 2, md: 4 } }}>
             
             <TypeFilter />
 
-            {/* 스킬 목록 영역: 상단 필터와 동일한 부모 너비를 가짐 */}
             <Box sx={{ width: "100%", mt: 5 }}>
               
-              {/* [헤더] - 카드와 좌우 패딩(24px)을 동일하게 맞춰서 수직 정렬 보장 */}
               <Box sx={{ display: "flex", px: "24px", mb: 1.5, color: "text.secondary", alignItems: "center" }}>
                 <Typography variant="caption" sx={{ width: COLUMN_WIDTHS.name, fontWeight: "bold" }}>기술명</Typography>
                 <Typography variant="caption" sx={{ width: COLUMN_WIDTHS.type, fontWeight: "bold", textAlign: "center" }}>타입</Typography>
@@ -132,10 +125,9 @@ export default function PokemonMove() {
                 <Typography variant="caption" sx={{ width: COLUMN_WIDTHS.etc, fontWeight: "bold", textAlign: "center" }}>기타</Typography>
               </Box>
 
-              {/* [리스트 본문] */}
               <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
                 {dummyMoves.map((move) => {
-                  const typeColor = move.color || "#e0e0e0";
+                  const typeColor = move.type.color || "#e0e0e0";
 
                   return (
                     <Card
@@ -161,11 +153,11 @@ export default function PokemonMove() {
                       </Typography>
 
                       <Box sx={{ width: COLUMN_WIDTHS.type, display: "flex", justifyContent: "center" }}>
-                        <TypeBadge name={move.type} color={move.color} />
+                        <TypeBadge name={move.type.name} color={move.type.color} />
                       </Box>
 
                       <Typography variant="body2" sx={{ width: COLUMN_WIDTHS.category, textAlign: "center", color: "text.secondary" }}>
-                        {getCategoryLabel(move.category)}
+                        {move.class.name}
                       </Typography>
 
                       <Typography variant="body2" sx={{ width: COLUMN_WIDTHS.power, textAlign: "center", fontWeight: 700 }}>
@@ -196,26 +188,13 @@ export default function PokemonMove() {
                           {move.description}
                         </Typography>
                       </Box>
-
+                      
+                      {/* 뱃지 */}
                       <Box sx={{ width: COLUMN_WIDTHS.etc, display: "flex", justifyContent: "center", gap: 0.5, flexWrap: "wrap" }}>
-                        {move.isContact !== undefined && (
-                          <Tooltip title={move.isContact ? "접촉 기술" : "비접촉 기술"} arrow>
-                            <Chip 
-                              label={move.isContact ? "접촉" : "비접촉"} 
-                              size="small" 
-                              variant="outlined"
-                              sx={{ 
-                                fontSize: "10px", 
-                                height: "20px",
-                                borderColor: move.isContact ? "#ffcdd2" : "#e0e0e0",
-                                color: move.isContact ? "#d32f2f" : "#757575"
-                              }}
-                            />
-                          </Tooltip>
-                        )}
                         {move.ailment && (
+                          <Tooltip title={move.ailment.description} arrow>
                           <Chip 
-                            label={move.ailment} 
+                            label={move.ailment.name} 
                             size="small" 
                             sx={{ 
                               fontSize: "10px", 
@@ -225,6 +204,37 @@ export default function PokemonMove() {
                               border: "1px solid #ddd"
                             }}
                           />
+                          </Tooltip>
+                        )}
+                        {move.category && (
+                          <Tooltip title={move.category.description} arrow>
+                          <Chip 
+                            label={move.category.name} 
+                            size="small" 
+                            sx={{ 
+                              fontSize: "10px", 
+                              height: "20px", 
+                              bgcolor: "#f5f5f5", 
+                              color: "#616161",
+                              border: "1px solid #ddd"
+                            }}
+                          />
+                          </Tooltip>
+                        )}
+                        {move.target && (
+                          <Tooltip title={move.target.description} arrow>
+                          <Chip 
+                            label={move.target.name} 
+                            size="small" 
+                            sx={{ 
+                              fontSize: "10px", 
+                              height: "20px", 
+                              bgcolor: "#f5f5f5", 
+                              color: "#616161",
+                              border: "1px solid #ddd"
+                            }}
+                          />
+                          </Tooltip>
                         )}
                       </Box>
                     </Card>
@@ -258,4 +268,15 @@ const tabStyle = {
     fontWeight: 900,
     zIndex: 2,
   },
+};
+
+const COLUMN_WIDTHS = {
+  name: "15%",
+  type: "10%",
+  category: "8%",
+  power: "7%",
+  accuracy: "7%",
+  pp: "7%",
+  description: "31%",
+  etc: "15%",
 };
