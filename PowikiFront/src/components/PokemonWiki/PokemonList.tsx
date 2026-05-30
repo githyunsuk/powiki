@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, CircularProgress, Grid, Typography } from "@mui/material";
 import PokemonCard from "./PokemonCard";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { usePokemonStore } from "../../store/pokemonStore";
@@ -59,7 +59,7 @@ export default function PokemonList() {
           setItemLimit((prev) => prev < filteredData.length ? prev + 20 : prev);
         }
       },
-      { threshold: 0.5 }
+      { threshold: 0.5, rootMargin: "100px" }
     );
 
     if (observerTarget.current) observer.observe(observerTarget.current);
@@ -97,7 +97,20 @@ export default function PokemonList() {
         </Grid>
       ))}
 
-      <div ref={observerTarget} style={{ height: "20px", width: "100%" }} />
+      {itemLimit < pokemonListData.length && (
+        <Box ref={observerTarget} 
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            py: 5, 
+            gap: 2
+          }}
+        >
+          <CircularProgress size={30} sx={{ color: "#e3350d" }} />
+        </Box>
+      )}
     </Grid>
   );
 }

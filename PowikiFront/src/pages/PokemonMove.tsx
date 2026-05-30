@@ -1,7 +1,10 @@
-import { Box, Typography, Card, Tooltip, Chip, Tabs, Tab, Paper } from "@mui/material";
+import { Box, Typography, Card, Tooltip, Chip, Tabs, Tab, Paper, CircularProgress } from "@mui/material";
 import TypeFilter from "../components/features/TypeFilter";
 import MoveSearchBar from "../components/PokemonMove/MoveSearchBar";
 import TypeBadge from "../components/common/TypeBadge";
+import { useEffect, useRef, useState } from "react";
+import api from "../api/axiosInstance";
+import Loading from "../components/common/Loading";
 
 interface MoveData {
   id: number;
@@ -21,7 +24,7 @@ interface MoveData {
     name: string;
     description: string;
   };
-  class:{
+  moveClass:{
     id: number;
     name: string;
     description: string;
@@ -37,43 +40,53 @@ interface MoveData {
   description: string;
 }
 
-const dummyMoves: MoveData[] = [
-  {
-    id: 1,
-    name: "10만볼트",
-    type: {
-      id: 1,
-      name: "전기",
-      color: "#F7D02C"
-    },
-    category: {
-      id: 1,
-      name: "공격",
-      description: "상대에게 피해를 입힙니다."
-    },
-    ailment: {
-      id: 1,
-      name: "마비",
-      description: "전투 도중 12.5%의 확률로 행동이 불가능하게 되며, 스피드가 50% 감소된다."
-    },
-    class:{
-      id: 1,
-      name: "물리",
-      description: "",
-    },
-    target: {
-      id: 1,
-      name: "단일 대상",
-      description: "필드 위의 포켓몬 중 1마리를 대상으로 선택합니다.",
-    },
-    power: 90,
-    accuracy: 100,
-    pp: 15,
-    description: "10만 볼트의 강한 전격을 상대에게 퍼부어 공격한다. 10% 확률로 상대를 마비 상태로 만든다.",
-  },
-];
-
 export default function PokemonMove() {
+
+  const [moveData, setMoveData] = useState<MoveData[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [itemLimit, setItemLimit] = useState(40);
+  const observerTarget = useRef(null);
+
+  // 기술 데이터 불러오기
+  useEffect(() => {
+    const getMoveData = async() => {
+      try{
+        setLoading(true);
+        const response = await api.get("/api/moves");
+        setMoveData(response.data.data);
+        console.log(response.data);
+      } catch(error) {
+        console.log("기술 데이터 정보 불러오기 실패", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    getMoveData();
+  }, [])
+
+  useEffect(() => {
+    setItemLimit((prev) => (prev !== 40 ? 40 : prev));
+  }, [moveData]); // 나중에 필터링 로직 짜면 filteredData로 교체
+
+  useEffect(() => {
+    if (moveData.length === 0 || itemLimit >= moveData.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setItemLimit((prev) => prev + 20);
+        }
+      }, { threshold: 1.0, rootMargin: "100px" }
+    );
+
+    if (observerTarget.current) observer.observe(observerTarget.current);
+
+    return () => observer.disconnect();
+  }, [moveData.length]);
+
+  const displayData = moveData.slice(0, itemLimit);
+
+  if (loading || !moveData) return <Loading />
 
   return (
     <>
@@ -126,7 +139,7 @@ export default function PokemonMove() {
               </Box>
 
               <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
-                {dummyMoves.map((move) => {
+                {displayData.map((move) => {
                   const typeColor = move.type.color || "#e0e0e0";
 
                   return (
@@ -142,6 +155,8 @@ export default function PokemonMove() {
                         borderLeft: `6px solid ${typeColor}`, 
                         bgcolor: "#ffffff",
                         transition: "all 0.2s ease-in-out",
+                        minHeight: "80px",      // 모든 카드의 최소 높이를 통일 (설명 2줄 기준)
+                        boxSizing: "border-box", // 패딩이 높이에 영향을 주지 않도록 설정
                         "&:hover": {
                           transform: "translateX(1px)",
                           boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
@@ -149,7 +164,7 @@ export default function PokemonMove() {
                       }}
                     >
                       <Typography sx={{ width: COLUMN_WIDTHS.name, fontWeight: "bold", fontSize: "1rem" }}>
-                        {move.name}
+                        {String(move.id).padStart(3, '0')} {move.name}
                       </Typography>
 
                       <Box sx={{ width: COLUMN_WIDTHS.type, display: "flex", justifyContent: "center" }}>
@@ -157,7 +172,7 @@ export default function PokemonMove() {
                       </Box>
 
                       <Typography variant="body2" sx={{ width: COLUMN_WIDTHS.category, textAlign: "center", color: "text.secondary" }}>
-                        {move.class.name}
+                        {move.moveClass.name}
                       </Typography>
 
                       <Typography variant="body2" sx={{ width: COLUMN_WIDTHS.power, textAlign: "center", fontWeight: 700 }}>
@@ -240,6 +255,22 @@ export default function PokemonMove() {
                     </Card>
                   );
                 })}
+
+                {itemLimit < moveData.length && (
+                <Box
+                  ref={observerTarget}
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    py: 5, 
+                    gap: 2
+                  }}
+                >
+                  <CircularProgress size={30} sx={{ color: "#e3350d" }} />
+                </Box>
+              )}
               </Box>
             </Box>
           </Box>

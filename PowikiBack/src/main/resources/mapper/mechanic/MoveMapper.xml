@@ -116,11 +116,48 @@
         )
     </insert>
 
+    <!-- 모든 기술 목록 resultMap-->
     <resultMap id="MoveListResponse" type="com.example.powiki.domain.mechanic.model.response.MoveListResponse">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="power" column="power"/>
+        <result property="accuracy" column="accuracy"/>
+        <result property="pp" column="pp"/>
+        <result property="description" column="description"/>
 
+        <association property="type" javaType="com.example.powiki.domain.mechanic.model.response.MoveListResponse$Type">
+            <id property="id" column="type_id" />
+            <result property="name" column="type_name" />
+            <result property="color" column="type_color" />
+        </association>
+
+        <association property="ailment" javaType="com.example.powiki.domain.mechanic.model.response.MoveListResponse$Ailment">
+            <id property="id" column="ailment_id" />
+            <result property="name" column="ailment_name" />
+            <result property="description" column="ailment_description" />
+        </association>
+
+        <association property="category" javaType="com.example.powiki.domain.mechanic.model.response.MoveListResponse$Category">
+            <id property="id" column="category_id" />
+            <result property="name" column="category_name" />
+            <result property="description" column="category_description" />
+        </association>
+
+        <association property="moveClass" javaType="com.example.powiki.domain.mechanic.model.response.MoveListResponse$MoveClass">
+            <id property="id" column="class_id" />
+            <result property="name" column="class_name" />
+            <result property="description" column="class_description" />
+        </association>
+
+        <association property="target" javaType="com.example.powiki.domain.mechanic.model.response.MoveListResponse$Target">
+            <id property="id" column="target_id" />
+            <result property="name" column="target_name" />
+            <result property="description" column="target_description" />
+        </association>
     </resultMap>
 
-    <select id="selectMoveList" resultMap="MoveListResponse">
+    <!-- 모든 기술 목록 SQL -->
+    <select id="selectAllMoveList" resultMap="MoveListResponse">
         SELECT
              m.id ,m.name ,m.power ,m.accuracy ,m.pp ,m.description
             ,t.id AS type_id, t.name AS type_name ,t.color AS type_color
@@ -130,28 +167,18 @@
             ,mt.id AS target_id ,mt.name AS target_name ,mt.description AS target_description
         FROM
             move m
-        JOIN
+        LEFT JOIN
             type t ON m.type_id = t.id
-        JOIN
-            move_ailment ma ON m.ailment_id = ma.id
-        JOIN
-            move_category mca ON m.category_id = mca.id
-        JOIN
-            move_class mc ON m.class_id = mc.id
-        JOIN
-            move_target mt ON m.target_id = mt.id
+        LEFT JOIN
+            move_ailment ma ON m.ailment_id = ma.id and ma.is_active = 'Y'
+        LEFT JOIN
+            move_category mca ON m.category_id = mca.id and mca.is_active = 'Y'
+        LEFT JOIN
+            move_class mc ON m.class_id = mc.id and mc.is_active = 'Y'
+        LEFT JOIN
+            move_target mt ON m.target_id = mt.id and mt.is_active = 'Y'
         WHERE
             m.is_active = 'Y'
-          AND
-            t.is_active = 'Y'
-          AND
-            ma.is_active = 'Y'
-          AND
-            mca.is_active = 'Y'
-          AND
-            mc.is_active = 'Y'
-          AND
-            mt.is_active = 'Y'
     </select>
 
 </mapper>
