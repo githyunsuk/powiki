@@ -1,12 +1,12 @@
 import { IconButton, InputBase, Paper } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
-// interface SearchBarProps {
-//   keyword: string;
-//   handleKeyword: (value: string) => void;
-// }
+interface SearchBarProps {
+  keyword: string;
+  handleKeyword: (value: string) => void;
+}
 
-export default function MoveSearchBar() {
+export default function MoveSearchBar({ keyword, handleKeyword}: SearchBarProps) {
 
   return (
     <Paper
@@ -25,9 +25,8 @@ export default function MoveSearchBar() {
       <InputBase
         sx={{ ml: 1, flex: 1, fontSize: "1.1rem" }}
         placeholder="기술 이름을 검색해보세요!"
-        // value={keyword}
-        // onChange={(e) => handleKeyword(e.target.value)}
-
+        value={keyword}
+        onChange={(e) => handleKeyword(e.target.value)}
       />
       <IconButton type="button" sx={{ p: "10px" }}>
         <SearchIcon />

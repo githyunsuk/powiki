@@ -80,6 +80,41 @@ export interface PokemonDetailListData {
   forms: PokemonFormData[];
 }
 
+// 포켓몬 기술 데이터
+export interface MoveData {
+  id: number;
+  name: string;
+  type: {
+    id: number;
+    name: string;
+    color: string;
+  };
+  category: {
+    id: number;
+    name: string;
+    description: string;
+  };
+  ailment: {
+    id: number;
+    name: string;
+    description: string;
+  };
+  moveClass:{
+    id: number;
+    name: string;
+    description: string;
+  };
+  target: {
+    id: number;
+    name: string;
+    description: string;
+  };
+  power: number;
+  accuracy: number;
+  pp: number;
+  description: string;
+} 
+
 export const mockData : PokemonDetailListData =
 {
   "speciesId": 6,

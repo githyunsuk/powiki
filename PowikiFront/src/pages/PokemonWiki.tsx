@@ -84,7 +84,7 @@ function PokemonWiki() {
   );
 }
 
-const tabStyle = {
+export const tabStyle = {
   textTransform: "none",
   fontWeight: "bold",
   fontSize: "0.9rem",
