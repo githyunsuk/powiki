@@ -1,5 +1,4 @@
--- powiki.ability definition
-drop table ability;
+-- 1. ability
 CREATE TABLE `ability` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) DEFAULT NULL,
@@ -10,11 +9,9 @@ CREATE TABLE `ability` (
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) DEFAULT CHARSET=utf8mb4;
 
-
--- powiki.egg_group definition
-drop table egg_group;
+-- 2. egg_group
 CREATE TABLE `egg_group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) DEFAULT NULL,
@@ -22,11 +19,9 @@ CREATE TABLE `egg_group` (
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) DEFAULT CHARSET=utf8mb4;
 
-
--- powiki.pokemon definition
-drop table pokemon;
+-- 3. pokemon
 CREATE TABLE `pokemon` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pokemon_species_id` int(11) DEFAULT NULL,
@@ -48,44 +43,34 @@ CREATE TABLE `pokemon` (
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) DEFAULT CHARSET=utf8mb4;
 
-
--- powiki.pokemon_ability_map definition
-drop table pokemon_ability_map;
+-- 4. pokemon_ability_map
 CREATE TABLE `pokemon_ability_map` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pokemon_id` int(11) DEFAULT NULL,
   `ability_id` int(11) DEFAULT NULL,
-  `pokemon_name` varchar(30) DEFAULT NULL,
-  `ability_name` varchar(30) DEFAULT NULL,
   `slot` int(11) DEFAULT NULL,
   `is_hidden` char(1) DEFAULT NULL,
   `is_active` char(1) NOT NULL DEFAULT 'Y',
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at?` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) DEFAULT CHARSET=utf8mb4;
 
-
--- powiki.pokemon_description definition
-drop table pokemon_description;
+-- 5. pokemon_description
 CREATE TABLE `pokemon_description` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `version_id` int(11) DEFAULT NULL,
-  `version_name` varchar(30) DEFAULT NULL,
   `pokemon_species_id` int(11) DEFAULT NULL,
-  `pokemon_species_name` varchar(30) DEFAULT NULL,
   `description` varchar(400) DEFAULT NULL,
   `is_active` char(1) NOT NULL DEFAULT 'Y',
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) DEFAULT CHARSET=utf8mb4;
 
-
--- powiki.pokemon_species definition
-drop table pokemon_species;
+-- 6. pokemon_species
 CREATE TABLE `pokemon_species` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) DEFAULT NULL,
@@ -100,26 +85,20 @@ CREATE TABLE `pokemon_species` (
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) DEFAULT CHARSET=utf8mb4;
 
-
--- powiki.pokemon_species_egg_group_map definition
-drop table pokemon_species_egg_group_map;
+-- 7. pokemon_species_egg_group_map
 CREATE TABLE `pokemon_species_egg_group_map` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `egg_group_id` int(11) DEFAULT NULL,
   `pokemon_species_id` int(11) DEFAULT NULL,
-  `egg_group_name` varchar(30) DEFAULT NULL,
-  `pokemon_species_name` varchar(30) DEFAULT NULL,
   `is_active` char(1) NOT NULL DEFAULT 'Y',
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) DEFAULT CHARSET=utf8mb4;
 
-
--- powiki.pokemon_sprite definition
-drop table pokemon_sprite;
+-- 8. pokemon_sprite
 CREATE TABLE `pokemon_sprite` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pokemon_id` int(11) DEFAULT NULL,
@@ -129,27 +108,21 @@ CREATE TABLE `pokemon_sprite` (
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) DEFAULT CHARSET=utf8mb4;
 
-
--- powiki.pokemon_type_map definition
-drop table pokemon_type_map;
+-- 9. pokemon_type_map
 CREATE TABLE `pokemon_type_map` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pokemon_id` int(11) DEFAULT NULL,
   `type_id` int(11) DEFAULT NULL,
-  `pokemon_name` varchar(30) DEFAULT NULL,
-  `type_name` varchar(30) DEFAULT NULL,
   `slot` int(11) DEFAULT NULL,
   `is_active` char(1) NOT NULL DEFAULT 'Y',
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) DEFAULT CHARSET=utf8mb4;
 
-
--- powiki.`type` definition
-drop table type;
+-- 10. type
 CREATE TABLE `type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) DEFAULT NULL,
@@ -160,11 +133,9 @@ CREATE TABLE `type` (
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10003 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) AUTO_INCREMENT=10003 DEFAULT CHARSET=utf8mb4;
 
-
--- powiki.type_efficacy definition
-drop table type_efficacy;
+-- 11. type_efficacy
 CREATE TABLE `type_efficacy` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `damage_type_id` int(11) DEFAULT NULL,
@@ -174,11 +145,9 @@ CREATE TABLE `type_efficacy` (
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) DEFAULT CHARSET=utf8mb4;
 
-
--- powiki.version definition
-drop table version;
+-- 12. version
 CREATE TABLE `version` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) DEFAULT NULL,
@@ -188,4 +157,101 @@ CREATE TABLE `version` (
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4;
+
+-- 13. move
+CREATE TABLE move (
+  id int NOT NULL AUTO_INCREMENT,
+  type_id INT,
+  target_id INT,
+  class_id INT,
+  category_id INT,
+  name varchar(30),
+  description VARCHAR(400),
+  power INT,
+  pp INT,
+  accuracy INT,
+  priority INT,
+  effect_chance INT,
+  ailment_id INT,
+  ailment_chance INT,
+  crit_rate INT,
+  drain INT,
+  flinch_chance INT,
+  healing INT,
+  max_hits INT,
+  min_hits INT,
+  max_turns INT,
+  min_turns INT,
+  stat_chance INT,
+  generation INT,
+  is_active char(1) NOT NULL DEFAULT 'Y',
+  created_at datetime NOT NULL DEFAULT current_timestamp(),
+  updated_at datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (id)
+) DEFAULT CHARSET=utf8mb4;
+
+-- 14. move_stat_charge
+CREATE TABLE move_stat_charge (
+  id INT NOT NULL AUTO_INCREMENT,
+  move_id INT,
+  stat enum('hp', 'speed', 'attack', 'defense', 'special-attack', 'special-defense'),
+  charge INT,
+  is_active char(1) NOT NULL DEFAULT 'Y',
+  created_at datetime NOT NULL DEFAULT current_timestamp(),
+  updated_at datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (id)
+) DEFAULT CHARSET=utf8mb4;
+
+-- 15. move_target
+CREATE TABLE move_target (
+ id INT NOT NULL AUTO_INCREMENT,
+ code varchar(30),
+ name varchar(30),
+ description varchar(400),
+ is_active char(1) NOT NULL DEFAULT 'Y',
+ created_at datetime NOT NULL DEFAULT current_timestamp(),
+ updated_at datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+ PRIMARY KEY (id)
+) DEFAULT CHARSET=utf8mb4;
+
+-- 16. move_category
+CREATE TABLE move_category (
+ id INT NOT NULL AUTO_INCREMENT,
+ code varchar(30),
+ name varchar(30),
+ description varchar(400),
+ is_active char(1) NOT NULL DEFAULT 'Y',
+ created_at datetime NOT NULL DEFAULT current_timestamp(),
+ updated_at datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+ PRIMARY KEY (id)
+) DEFAULT CHARSET=utf8mb4;
+
+-- 17. move_class
+CREATE TABLE move_class (
+ id INT NOT NULL AUTO_INCREMENT,
+ code varchar(30),
+ name varchar(30),
+ description varchar(400),
+ is_active char(1) NOT NULL DEFAULT 'Y',
+ created_at datetime NOT NULL DEFAULT current_timestamp(),
+ updated_at datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+ PRIMARY KEY (id)
+) DEFAULT CHARSET=utf8mb4;
+
+-- 18. move_ailment
+CREATE TABLE move_ailment (
+ id INT NOT NULL AUTO_INCREMENT,
+ code varchar(30),
+ name varchar(30),
+ description varchar(400),
+ is_active char(1) NOT NULL DEFAULT 'Y',
+ created_at datetime NOT NULL DEFAULT current_timestamp(),
+ updated_at datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+ PRIMARY KEY (id)
+) DEFAULT CHARSET=utf8mb4;
+
+
+
+
+
